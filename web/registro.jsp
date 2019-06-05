@@ -138,7 +138,7 @@
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Ingrese su Rut:</h5>
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtRut" id="txtRut" placeholder="Ingrese su Rut">
+                                                   name="txtRut" id="txtRut" placeholder="Ingrese su Rut (11111111-1)">
                                         </div>
 
                                         <!-- CONTRASEÑA -->

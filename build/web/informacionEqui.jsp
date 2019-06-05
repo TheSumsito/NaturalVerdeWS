@@ -47,7 +47,7 @@
                     <div class="collapse navbar-collapse" id="menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="indexCli.jsp">Inicio</a></li>
-                            <li><a href="solicitudPro.jsp">Solicitud en Linea</a></li>
+                            <li><a href="solicitudProyecto">Solicitud en Linea</a></li>
                             <li><a href="estadoSolicitud">Estado de Solicitud</a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

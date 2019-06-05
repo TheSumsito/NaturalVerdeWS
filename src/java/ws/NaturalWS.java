@@ -97,6 +97,40 @@ public class NaturalWS {
         return null;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "estadoProyecto")
+    public boolean estadoProyecto(@WebParam(name = "pro") Proyecto pro) {
+        daoControlador dao = new daoControlador();
+        try {
+            dao.cambiarEstadoPro(pro);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "estadoAgendar")
+    public boolean estadoAgendar(@WebParam(name = "soli") Solicitud soli) {
+        daoControlador dao = new daoControlador();
+        
+        try {
+            dao.cambiarEstadoSoli(soli);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+
+
+
 
 
 

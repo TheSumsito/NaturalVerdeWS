@@ -8,6 +8,7 @@ package modelo.controlador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -17,14 +18,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
+import modelo.entidades.Equipo;
 import modelo.entidades.Proyecto;
 
 /**
  *
  * @author mjara
  */
-@WebServlet(name = "solicitudServicio", urlPatterns = {"/solicitudServicio"})
-public class solicitudServicio extends HttpServlet {
+@WebServlet(name = "solicitudProyecto", urlPatterns = {"/solicitudProyecto"})
+public class solicitudProyecto extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,32 +39,20 @@ public class solicitudServicio extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String Nombre = request.getParameter("txtNombre").toUpperCase();
-        String Servicio = request.getParameter("cboServicio").toUpperCase();
-        String Equipo = request.getParameter("cboEquipo").toUpperCase();
-
-        HttpSession sesion = request.getSession();
-
-        String RutCliente = (String) sesion.getAttribute("rut");
-        String Estado = "PENDIENTE";
-
-        Proyecto pro = new Proyecto(Nombre, Servicio, Estado, RutCliente, Equipo);
-        daoControlador dao = new daoControlador();
-
-        boolean resp = false;
-
-        try {
-            if (dao.AgregarProyecto(pro)) {
-                resp = true;
-            } else {
-                resp = false;
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            daoControlador dao = new daoControlador();
+            List<Equipo> listadoEquipo = null;
+            
+            try {
+                listadoEquipo = dao.ListaEquipo();
+            } catch (SQLException ex) {
+                Logger.getLogger(solicitudProyecto.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(solicitudServicio.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("equipo", listadoEquipo);
+            request.getRequestDispatcher("solicitudPro.jsp").forward(request, response);
+            
         }
-        request.setAttribute("respuesta", resp);
-        request.getRequestDispatcher("solicitudPro.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -91,7 +81,32 @@ public class solicitudServicio extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String Nombre = request.getParameter("txtNombre").toUpperCase();
+        String Servicio = request.getParameter("cboServicio").toUpperCase();
+        String Equipo = request.getParameter("cboEquipo").toUpperCase();
+
+        HttpSession sesion = request.getSession();
+
+        String RutCliente = (String) sesion.getAttribute("rut");
+        String Estado = "PENDIENTE";
+
+        Proyecto pro = new Proyecto(Nombre, Servicio, Estado, RutCliente, Equipo);
+        daoControlador dao = new daoControlador();
+
+        boolean resp = false;
+
+        try {
+            if (dao.AgregarProyecto(pro)) {
+                resp = true;
+            } else {
+                resp = false;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(solicitudProyecto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("respuesta", resp);
+        request.getRequestDispatcher("solicitudPro.jsp").forward(request, response);
     }
 
     /**

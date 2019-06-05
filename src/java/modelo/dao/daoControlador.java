@@ -356,4 +356,87 @@ public class daoControlador {
         }
         return respuesta;
     }
+
+    public boolean filtrarTrabajadores(String equipo) {
+        boolean respuesta = false;
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String buscarTrabajadores = "SELECT * FROM TRABAJADOR WHERE NOMBRE_EQUIPO='" + equipo + "'";
+            CallableStatement cstmt = this.conexion.prepareCall(buscarTrabajadores);
+
+            ResultSet rs = cstmt.getResultSet();
+
+            if (cstmt.executeUpdate() == 1) {
+                respuesta = true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return respuesta;
+    }
+
+    public boolean filtrarProyecto(String nombre) {
+        boolean respuesta = false;
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String buscarProyecto = "SELECT * FROM PROYECTO WHERE NOMBRE_PROYECTO='" + nombre + "'";
+            CallableStatement cstmt = this.conexion.prepareCall(buscarProyecto);
+
+            ResultSet rs = cstmt.getResultSet();
+
+            if (cstmt.executeUpdate() == 1) {
+                respuesta = true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return respuesta;
+    }
+
+    //MODIFICAR
+    public boolean cambiarEstadoPro(Proyecto pro) throws SQLException {
+        boolean respuesta = false;
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String cambiarEstado = "{ CALL SP_CAMBIAR_ESTADO_PROYECTO (?,?,?,?,?)}";
+            CallableStatement cstmt = this.conexion.prepareCall(cambiarEstado);
+            cstmt.setString(1, pro.getNombre_Proyecto());
+            cstmt.setString(2, pro.getServicio());
+            cstmt.setString(3, pro.getEstado());
+            cstmt.setString(4, pro.getRutCliente());
+            cstmt.setString(5, pro.getNombre_Equipo());
+
+            if (cstmt.executeUpdate() == 1) {
+                respuesta = true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return respuesta;
+    }
+    
+    public boolean cambiarEstadoSoli(Solicitud soli) throws SQLException{
+        boolean respuesta = false;
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String cambiarEstado = "{ CALL SP_CAMBIAR_ESTADO_AGENDAR (?,?,?,?,?)}";
+            CallableStatement cstmt = this.conexion.prepareCall(cambiarEstado);
+            cstmt.setInt(1, soli.getCodSolicitud());
+            cstmt.setString(2, soli.getHora());
+            cstmt.setString(3, soli.getFecha());
+            cstmt.setString(4, soli.getEstado());
+            cstmt.setString(5, soli.getNombre_Proyecto());
+            
+            if(cstmt.executeUpdate()==1){
+                respuesta = true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return respuesta;
+    }
 }

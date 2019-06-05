@@ -47,7 +47,7 @@
                     <div class="collapse navbar-collapse" id="menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="indexCli.jsp">Inicio</a></li>
-                            <li class="active"><a href="solicitudPro.jsp">Solicitud en Linea</a></li>
+                            <li class="active"><a href="solicitudProyecto">Solicitud en Linea</a></li>
                             <li><a href="estadoSolicitud">Estado de Solicitud</a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -98,7 +98,7 @@
             <br>
 
             <!-- FORMULARIO -->
-            <form method="POST" action="solicitudServicio" autocomplete="off">
+            <form method="POST" action="solicitudProyecto" autocomplete="off">
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
@@ -129,7 +129,9 @@
                                         <h5>Seleccione Equipo a Terreno</h5>
                                         <Select class="form-control" name="cboEquipo" id="cboEquipo">
                                             <option value="">Seleccionar</option>
-                                            <option value="REBOOT SOFTWARE">Reboot Software</option>
+                                            <c:forEach var="equi" items="${equipo}">
+                                                <option>${equi.getNombre_Equipo()}</option>
+                                            </c:forEach>
                                         </Select>
                                     </div>
 

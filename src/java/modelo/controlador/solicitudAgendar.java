@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -44,7 +46,7 @@ public class solicitudAgendar extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             daoControlador dao = new daoControlador();
             List<Proyecto> listadoProyecto = null;
-            
+
             try {
                 listadoProyecto = dao.listarProyecto();
             } catch (SQLException ex) {
@@ -82,25 +84,28 @@ public class solicitudAgendar extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         boolean resp = false;
+        Random generadorAleatorios = new Random();
+        int CodSolicitud = 1 + generadorAleatorios.nextInt(100000);
 
-        int Codigo = 123;
+        int Codigo = CodSolicitud;
         String Hora = request.getParameter("txtHora");
         String Fecha = request.getParameter("txtFecha");
         String Estado = "PENDIENTE";
         String Proyecto = request.getParameter("cboProyecto");
-        
+
         Solicitud soli = new Solicitud(Codigo, Hora, Fecha, Estado, Proyecto);
         daoControlador dao = new daoControlador();
-        
+        List<Proyecto> listadoProyecto = null;
+
         try {
-            if(dao.AgregarSolicitud(soli))
-            {
-                resp=true;
+            if (dao.AgregarSolicitud(soli)) {
+                resp = true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(solicitudAgendar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        request.setAttribute("resp", resp);
+        request.setAttribute("respuesta", resp);
+        request.setAttribute("proyecto", listadoProyecto);
         request.getRequestDispatcher("agendarHora.jsp").forward(request, response);
 
     }

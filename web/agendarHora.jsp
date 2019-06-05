@@ -47,7 +47,7 @@
                     <div class="collapse navbar-collapse" id="menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="indexCli.jsp">Inicio</a></li>
-                            <li class="active"><a href="solicitudPro.jsp">Solicitud en Linea</a></li>
+                            <li class="active"><a href="solicitudProyecto">Solicitud en Linea</a></li>
                             <li><a href="estadoSolicitud">Estado de Solicitud</a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -79,8 +79,17 @@
                         <div class="section-heading text-center">
                             <br>
                             <h2 class="h-bold" style="color: green">Agendar Hora a Terreno</h2>
-
                             <div class="divider-header"></div>
+
+                            <!-- MENSAJE DE ALERTA -->
+                            <div class="container-fluid">
+                                <c:if test="${respuesta==true}">
+                                    <div class="alert alert-success">Solicitud enviada Correctamente</div>
+                                </c:if>
+                                <c:if test="${respuesta==false}">
+                                    <div class="alert alert-danger">Nombre de Proyecto ya Existente</div>
+                                </c:if>
+                            </div>
                         </div>
                     </div>
                 </div>
