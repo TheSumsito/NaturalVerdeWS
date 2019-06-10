@@ -13,12 +13,12 @@ public class Trabajador {
     private String Rut_Trabajador;
     private String Nombre_Trabajador;
     private String Cargo;
-    private Equipo Nombre_Equipo;
+    private String Nombre_Equipo;
 
     public Trabajador() {
     }
 
-    public Trabajador(String Rut_Trabajador, String Nombre_Trabajador, String Cargo, Equipo Nombre_Equipo) {
+    public Trabajador(String Rut_Trabajador, String Nombre_Trabajador, String Cargo, String Nombre_Equipo) {
         this.Rut_Trabajador = Rut_Trabajador;
         this.Nombre_Trabajador = Nombre_Trabajador;
         this.Cargo = Cargo;
@@ -49,11 +49,11 @@ public class Trabajador {
         this.Cargo = Cargo;
     }
 
-    public Equipo getNombre_Equipo() {
+    public String getNombre_Equipo() {
         return Nombre_Equipo;
     }
 
-    public void setNombre_Equipo(Equipo Nombre_Equipo) {
+    public void setNombre_Equipo(String Nombre_Equipo) {
         this.Nombre_Equipo = Nombre_Equipo;
     }
 

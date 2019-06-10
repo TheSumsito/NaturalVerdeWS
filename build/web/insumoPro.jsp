@@ -48,7 +48,17 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="indexCli.jsp">Inicio</a></li>
                             <li><a href="solicitudProyecto">Solicitud en Linea</a></li>
-                            <li><a href="estadoSolicitud">Estado de Solicitud</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Estado de Solicitud
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="estadoSolicitud">SOLICITUD PROYECTO</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="estadoHora">HORA AGENDADA</a>
+                                </div>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -98,11 +108,10 @@
                                         <div class="service-desc">
                                             <h5>Nombre del Proyecto:</h5>
                                             <br>
-                                            <select class="form-control" style=" width:50%" name="cboNombre"
-                                                    id="cboNombre">
+                                            <select class="form-control" style=" width:50%" name="cboProyecto">
                                                 <option>Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
-                                                    <option>${pro.getNombre_Proyecto()}</option>
+                                                    <option value="${pro.getNombre_Proyecto()}">${pro.getNombre_Proyecto()}</option>
                                                 </c:forEach>
                                             </select>
                                             <br>
@@ -111,56 +120,83 @@
                                         </div>
                                     </center>
 
-                                    <c:forEach var="insu" items="${insumo}">
-                                        <div class="box-register form-row">
-
+                                    <div class="box-register form-row">
+                                        <div class="container-fluid">
                                             <!-- NUMERO REGISTRO -->
                                             <ul class="list-group col-md-1 service-desc">
                                                 <h5>Numero</h5>
-                                                <li class="list-group-item">${insu.getCodInsumo()}</li>
                                             </ul>
 
                                             <!-- REGISTROS DEL HISTORIAL -->
                                             <ul class="list-group col-md-4 service-desc">
                                                 <h5>Descripcion</h5>
-                                                <li class="list-group-item">${insu.getDescripcion()}</li>
                                             </ul>
 
                                             <ul class="list-group col-md-2 service-desc">
                                                 <h5>Tienda</h5>
-                                                <li class="list-group-item">${insu.getTienda()}</li>
                                             </ul>
 
                                             <!-- CANTIDAD -->
                                             <ul class="list-group col-md-1 service-desc">
                                                 <h5>Cantidad</h5>
-                                                <li class="list-group-item">${insu.getCantidad()}</li>
                                             </ul>
 
                                             <!--PRECIOS-->
                                             <ul class="list-group col-md-2 service-desc">
                                                 <h5>Precio Unitario</h5>
-                                                <li class="list-group-item">$ ${insu.getPrecio()}</li>
                                             </ul>
 
                                             <!-- VALOR TOTAL -->
                                             <ul class="list-group col-md-2 service-desc">
                                                 <h5>Precio Total</h5>
-                                                <li class="list-group-item">$ ${insu.getPrecio() * insu.getCantidad()}</li>
                                             </ul>
-                                            
-                                            <div class="service-desc form-group col-md">
-                                                <h5>Valor Total: <span>$133.350</span></h5>
-                                            </div>
-
-                                            <!-- BOTONES -->
-                                            <div class="services-desc col-md">
-                                                <!-- BOTON PAGAR -->
-                                                <input class="btn btn-skin" type="submit" value="Pagar" disabled>
-                                            </div>
                                         </div>
-                                    </c:forEach>
 
+
+                                        <div class="container-fluid">
+                                            <c:forEach var="insu" items="${insumo}">
+                                                <!-- NUMERO REGISTRO -->
+                                                <ul class="list-group col-md-1 service-desc">
+                                                    <li class="list-group-item">${insu.getCodInsumo()}</li>
+                                                </ul>
+
+                                                <!-- REGISTROS DEL HISTORIAL -->
+                                                <ul class="list-group col-md-4 service-desc">
+                                                    <li class="list-group-item">${insu.getDescripcion()}</li>
+                                                </ul>
+
+                                                <!-- TIENDA -->
+                                                <ul class="list-group col-md-2 service-desc">
+                                                    <li class="list-group-item">${insu.getTienda()}</li>
+                                                </ul>
+
+                                                <!-- CANTIDAD -->
+                                                <ul class="list-group col-md-1 service-desc">
+                                                    <li class="list-group-item">${insu.getCantidad()}</li>
+                                                </ul>
+
+                                                <!--PRECIOS-->
+                                                <ul class="list-group col-md-2 service-desc">
+                                                    <li class="list-group-item">$ ${insu.getPrecio()}</li>
+                                                </ul>
+
+                                                <!-- VALOR TOTAL -->
+                                                <ul class="list-group col-md-2 service-desc">
+                                                    <li class="list-group-item">$ ${insu.getPrecio() * insu.getCantidad()}</li>
+                                                </ul>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                    <div class="box-register container-fluid">
+                                        <div class="service-desc form-group col-md">
+                                            <h5>Valor Total: <span>$ ${total}</span></h5>
+                                        </div>
+                                        <!-- BOTONES -->
+                                        <div class="services-desc col-md">
+                                            <!-- BOTON PAGAR -->
+                                            <input class="btn btn-skin" type="submit" value="Pagar" disabled>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

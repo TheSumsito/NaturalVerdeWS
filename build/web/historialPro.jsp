@@ -48,7 +48,17 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="indexCli.jsp">Inicio</a></li>
                             <li><a href="solicitudProyecto">Solicitud en Linea</a></li>
-                            <li><a href="estadoSolicitud">Estado de Solicitud</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Estado de Solicitud
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="estadoSolicitud">SOLICITUD PROYECTO</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="estadoHora">HORA AGENDADA</a>
+                                </div>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -100,11 +110,10 @@
                                         <div class="service-desc">
                                             <h5>Nombre del Proyecto:</h5>
                                             <br>
-                                            <select class="form-control" style=" width:50%" name="cboNombre"
-                                                    id="cboNombre">
+                                            <select class="form-control" style=" width:50%" name="cboProyecto">
                                                 <option>Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
-                                                    <option>${pro.getNombre_Proyecto()}</option>
+                                                    <option value="${pro.getNombre_Proyecto()}">${pro.getNombre_Proyecto()}</option>
                                                 </c:forEach>
                                             </select>
                                             <br>
@@ -112,37 +121,57 @@
                                             <hr>
                                         </div>
                                     </center>
-
-
-                                    <c:forEach var="hist" items="${historial}">
-                                        <div class="box-register form-row">
-
+                                    <div class="box-register form-row">
+                                        <div class="container-fluid">
                                             <!-- FASE REGISTRO -->
                                             <ul class="list-group col-md-1 service-desc">
                                                 <h5>Fase</h5>
-                                                <li class="list-group-item">${hist.getFase()}</li>
                                             </ul>
 
                                             <!-- FECHAS -->
                                             <ul class="list-group col-md-2 service-desc">
                                                 <h5>Fecha</h5>
-                                                <li class="list-group-item">${hist.getFecha()}</li>
                                             </ul>
 
                                             <!-- REGISTROS DEL HISTORIAL -->
                                             <ul class="list-group col-md-6 service-desc">
                                                 <h5>Descripcion</h5>
-                                                <li class="list-group-item">${hist.getDescripcion()}</li>
                                             </ul>
 
                                             <!-- APROBACIONES - PENDIENTE -->
                                             <ul class="list-group col-md-3 service-desc">
                                                 <h5>Estado</h5>
-                                                <li class="list-group-item">${hist.getEstado()}</li>
                                             </ul>
                                         </div>
-                                    </c:forEach>
 
+
+                                        <div class="container-fluid">
+                                            <c:forEach var="his" items="${historial}">
+                                                <!-- FASE REGISTRO -->
+                                                <ul class="list-group col-md-1 service-desc">
+                                                    <li class="list-group-item">${his.getFase()}</li>
+                                                </ul>
+
+
+                                                <!-- FECHAS -->
+                                                <ul class="list-group col-md-2 service-desc">
+                                                    <li class="list-group-item">${his.getFecha()}</li>
+                                                </ul>
+
+
+                                                <!-- REGISTROS DEL HISTORIAL -->
+                                                <ul class="list-group col-md-6 service-desc">
+                                                    <li class="list-group-item">${his.getDescripcion()}</li>
+                                                </ul>
+
+
+                                                <!-- APROBACIONES - PENDIENTE -->
+                                                <ul class="list-group col-md-3 service-desc">
+                                                    <li class="list-group-item">${his.getEstado()}</li>
+                                                </ul>
+                                            </c:forEach>
+                                        </div>    
+                                    </div>
                                 </div>
                             </div>
                         </div>

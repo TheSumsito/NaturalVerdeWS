@@ -5,12 +5,19 @@
  */
 package test;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import modelo.dao.daoControlador;
+import modelo.entidades.Historial;
+import modelo.entidades.Insumo;
 import modelo.entidades.Proyecto;
+import modelo.entidades.Trabajador;
+import oracle.net.aso.i;
 
 /**
  *
@@ -21,24 +28,14 @@ public class testBuscar {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         daoControlador dao = new daoControlador();
-
-        if (dao.filtrarProyecto("CAMBIO SISTEMA DE REGADO")) {
-            System.out.println("Proyecto Encontrado");
-            Random generadorAleatorios = new Random();
-            int numero = 1 + generadorAleatorios.nextInt(100000);
-            System.out.println(numero);
-
-        } else {
-            System.out.println("No Encontrado");
+        List<Trabajador> nana = dao.buscarTrabajador("QMEMO");
+        
+        for (Trabajador tra : nana) {
+            System.out.println(tra.toString());
         }
-
-        if (dao.filtrarTrabajadores("REBOOT SOFTWARE")) {
-            System.out.println("Equipo Encontrado");
-        } else {
-            System.out.println("Equipo No Encontrado");
-        }
+        
     }
 
 }

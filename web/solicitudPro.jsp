@@ -48,7 +48,17 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="indexCli.jsp">Inicio</a></li>
                             <li class="active"><a href="solicitudProyecto">Solicitud en Linea</a></li>
-                            <li><a href="estadoSolicitud">Estado de Solicitud</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Estado de Solicitud
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="estadoSolicitud">SOLICITUD PROYECTO</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="estadoHora">HORA AGENDADA</a>
+                                </div>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

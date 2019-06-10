@@ -18,6 +18,7 @@ import modelo.entidades.Historial;
 import modelo.entidades.Insumo;
 import modelo.entidades.Proyecto;
 import modelo.entidades.Solicitud;
+import modelo.entidades.Trabajador;
 import modelo.entidades.Usuario;
 
 /**
@@ -97,6 +98,7 @@ public class NaturalWS {
         return null;
     }
 
+    
     /**
      * Web service operation
      */
@@ -115,10 +117,10 @@ public class NaturalWS {
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "estadoAgendar")
-    public boolean estadoAgendar(@WebParam(name = "soli") Solicitud soli) {
+    @WebMethod(operationName = "estadoSolicitud")
+    public boolean estadoSolicitud(@WebParam(name = "soli") Solicitud soli) {
         daoControlador dao = new daoControlador();
-        
+
         try {
             dao.cambiarEstadoSoli(soli);
             return true;
@@ -127,6 +129,131 @@ public class NaturalWS {
         }
         return false;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "agregarInsumo")
+    public boolean agregarInsumo(@WebParam(name = "insu") Insumo insu) {
+        daoControlador dao = new daoControlador();
+        try {
+            dao.AgregarInsumo(insu);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "agregarHistorial")
+    public boolean agregarHistorial(@WebParam(name = "his") Historial his) {
+        daoControlador dao = new daoControlador();
+        try {
+            dao.AgregarHistorial(his);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "listaTrabajador")
+    public List<Trabajador> listaTrabajador() {
+        daoControlador dao = new daoControlador();
+        try {
+            return dao.listarTrabajador();
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "buscarProyecto")
+    public List<Proyecto> buscarProyecto(@WebParam(name = "rutcliente") String rutcliente) {
+        daoControlador dao = new daoControlador();
+        
+        try {
+            return dao.buscarProyecto(rutcliente);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "buscarHistorial")
+    public List<Historial> buscarHistorial(@WebParam(name = "nombreProyecto") String nombreProyecto) {
+        daoControlador dao = new daoControlador();
+        
+        try {
+            return dao.buscarHistorial(nombreProyecto);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "buscarInsumo")
+    public List<Insumo> buscarInsumo(@WebParam(name = "nombreProyecto") String nombreProyecto) {
+        daoControlador dao = new daoControlador();
+        
+        try {
+            return dao.buscarInsumo(nombreProyecto);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "buscarTrabajador")
+    public List<Trabajador> buscarTrabajador(@WebParam(name = "nombreEquipo") String nombreEquipo) {
+        daoControlador dao = new daoControlador();
+        
+        try {
+            return dao.buscarTrabajador(nombreEquipo);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "proyecto")
+    public Proyecto proyecto(@WebParam(name = "nombreProyecto") String nombreProyecto) {
+        daoControlador dao = new daoControlador();
+        
+        try {
+            return dao.estadoProyecto(nombreProyecto);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+
+
+
+
+
 
 
 

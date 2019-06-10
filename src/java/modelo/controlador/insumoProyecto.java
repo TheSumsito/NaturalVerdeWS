@@ -8,6 +8,7 @@ package modelo.controlador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
 import modelo.entidades.Insumo;
 import modelo.entidades.Proyecto;
@@ -39,17 +41,18 @@ public class insumoProyecto extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         daoControlador dao = new daoControlador();
-        List<Insumo> listadoInsumo = null;
-        List<Proyecto> listadoProyecto = null;
-        
+        List<Proyecto> Proyecto = null;
+
+        HttpSession sesion = request.getSession();
+        String RutCliente = (String) sesion.getAttribute("rut");
+
+
         try {
-            listadoInsumo = dao.ListaInsumo();
-            listadoProyecto = dao.listarProyecto();
-        } catch (SQLException ex) {
-            Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, ex);
+            Proyecto = dao.buscarProyecto(RutCliente);
+        } catch (Exception e) {
+            Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
-        request.setAttribute("insumo", listadoInsumo);
-        request.setAttribute("proyecto", listadoProyecto);
+        request.setAttribute("proyecto", Proyecto);
         request.getRequestDispatcher("insumoPro.jsp").forward(request, response);
     }
 
@@ -79,7 +82,24 @@ public class insumoProyecto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        daoControlador dao = new daoControlador();
+        List<Insumo> Insumo = new ArrayList<Insumo>();
+        List<Proyecto> Proyecto = new ArrayList<Proyecto>();
+        
+        HttpSession sesion = request.getSession();
+        String RutCliente = (String) sesion.getAttribute("rut");
+        
+        String Nombre_Proyecto = request.getParameter("cboProyecto");
+        
+        try {
+            Insumo = dao.buscarInsumo(Nombre_Proyecto);
+            Proyecto = dao.buscarProyecto(Nombre_Proyecto);
+        } catch (Exception e) {
+            Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, e);
+        }
+        request.setAttribute("proyecto", Proyecto);
+        request.setAttribute("insumo", Insumo);
+        request.getRequestDispatcher("insumoPro.jsp").forward(request, response);
     }
 
     /**

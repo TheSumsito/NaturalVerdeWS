@@ -8,6 +8,7 @@ package modelo.controlador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
 import modelo.entidades.Historial;
 import modelo.entidades.Proyecto;
@@ -38,18 +40,18 @@ public class historialProyecto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         daoControlador dao = new daoControlador();
-        List<Historial> listadoHistorial = null;
-        List<Proyecto> listadoProyecto = null;
+        HttpSession sesion = request.getSession();
+        List<Proyecto> proyecto = null;
+
+        String RutCliente = (String) sesion.getAttribute("rut");
+
         try {
-            listadoHistorial = dao.ListarHistorial();
-            listadoProyecto = dao.listarProyecto();
-        } catch (SQLException ex) {
-            Logger.getLogger(historialProyecto.class.getName()).log(Level.SEVERE, null, ex);
+            proyecto = dao.buscarProyecto(RutCliente);
+        } catch (Exception e) {
+            Logger.getLogger(historialProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
-        request.setAttribute("historial", listadoHistorial);
-        request.setAttribute("proyecto", listadoProyecto);
+        request.setAttribute("proyecto", proyecto);
         request.getRequestDispatcher("historialPro.jsp").forward(request, response);
     }
 
@@ -79,7 +81,19 @@ public class historialProyecto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        daoControlador dao = new daoControlador();
+        List<Historial> Historial = new ArrayList<Historial>();
+        
+        String Nombre_Proyecto = request.getParameter("cboProyecto");
+        
+        try {
+            Historial = dao.buscarHistorial(Nombre_Proyecto);
+        } catch (Exception e) {
+            Logger.getLogger(historialProyecto.class.getName()).log(Level.SEVERE, null, e);
+        }
+        request.setAttribute("historial", Historial);
+        request.getRequestDispatcher("historialPro.jsp").forward(request, response);
+
     }
 
     /**

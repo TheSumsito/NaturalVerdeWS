@@ -48,7 +48,17 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="indexCli.jsp">Inicio</a></li>
                             <li><a href="solicitudProyecto">Solicitud en Linea</a></li>
-                            <li><a href="estadoSolicitud">Estado de Solicitud</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Estado de Solicitud
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="estadoSolicitud">SOLICITUD PROYECTO</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="estadoHora">HORA AGENDADA</a>
+                                </div>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -87,7 +97,7 @@
 
 
             <!-- INFORMACION DE LOS EQUIPOS A TERRENO -->
-            <form method="POST" action="#">
+            <form action="informacionEquipo" method="POST">
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
@@ -99,27 +109,32 @@
                                         <div class="service-desc">
                                             <h5>Nombre del Proyecto:</h5>
                                             <br>
-                                            <select class="form-control" style=" width:50%" name="cboNombre"
+                                            <select class="form-control" style=" width:50%" name="cboProyecto"
                                                     id="cboNombre">
                                                 <option>Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
-                                                    <option>${pro.getNombre_Proyecto()}</option>
+                                                    <option value="${pro.getNombre_Proyecto()}">${pro.getNombre_Proyecto()}</option>
                                                 </c:forEach>
                                             </select>
                                             <br>
-                                            <input class="btn btn-skin" type="submit" value="Seleccionar">
+                                            <input class="btn btn-skin" type="submit" name="btnAccion" value="Seleccionar">
                                             <hr>
                                         </div>
                                     </center>
 
 
                                     <div class="box-register form-row col-md-4">
-
                                         <!-- NOMBRE EQUIPO -->
                                         <div class="service-desc form-group col-md">
                                             <h5>Equipo a Terreno</h5>
-                                            <input class="form-control" type="text" name="txtEquipo" id="txtEquipo"
-                                                   readonly="readonly">
+                                            <c:if test="${equipo!=null}">
+                                                <input class="form-control" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly" value="${equipo}">
+                                            </c:if>
+                                            <c:if test="${equipo==null}">
+                                                <input class="form-control" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly">
+                                            </c:if>
+                                            <br>
+                                            <input class="btn btn-skin" type="submit" name="btnAccion" value="Mostrar">
                                         </div>
                                     </div>
 
@@ -127,11 +142,9 @@
                                     <div class="service-desc form-group col-md-4">
                                         <ul class="list-group col">
                                             <h5>Nombres</h5>
-                                            <li class="list-group-item">Pablo Herrera</li>
-                                            <li class="list-group-item">Marcelo Jara</li>
-                                            <li class="list-group-item">Batian Martinez</li>
-                                            <li class="list-group-item">German Duran</li>
-                                            <li class="list-group-item">Boris San Martin</li>
+                                            <c:forEach var="tra" items="${trabajador}">
+                                                <li class="list-group-item">${tra.getNombre_Trabajador()}</li>
+                                                </c:forEach>
                                         </ul>
                                     </div>
 
@@ -139,12 +152,10 @@
                                     <div class="service-desc form-group col-md-4">
                                         <ul class="list-group col">
                                             <h5>Cargo</h5>
-                                            <li class="list-group-item">Jefe</li>
-                                            <li class="list-group-item">Tecnico - Diseñador</li>
-                                            <li class="list-group-item">Tecnico</li>
-                                            <li class="list-group-item">Tecnico</li>
-                                            <li class="list-group-item">Tecnico</li>
-                                        </ul>
+                                            <c:forEach var="tra" items="${trabajador}">
+                                                <li class="list-group-item">${tra.getCargo()}</li>
+                                                </c:forEach>
+                                        </ul> 
                                     </div>
                                 </div>
                             </div>

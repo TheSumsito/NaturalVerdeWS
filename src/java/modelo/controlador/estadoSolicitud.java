@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
 import modelo.entidades.Proyecto;
 
@@ -38,15 +39,19 @@ public class estadoSolicitud extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         daoControlador dao = new daoControlador();
-        List<Proyecto> listadoProyecto = null;
-        
+        HttpSession sesion = request.getSession();
+
+        String RutCliente = (String) sesion.getAttribute("rut");
+        List<Proyecto> proyecto = null;
+
         try {
-            listadoProyecto = dao.listarProyecto();
-        } catch (SQLException ex) {
-            Logger.getLogger(estadoSolicitud.class.getName()).log(Level.SEVERE, null, ex);
+            proyecto = dao.buscarProyecto(RutCliente);
+        } catch (Exception e) {
+            Logger.getLogger(estadoSolicitud.class.getName()).log(Level.SEVERE, null, e);
         }
-        request.setAttribute("proyecto", listadoProyecto);
+        request.setAttribute("proyecto", proyecto);
         request.getRequestDispatcher("estadoSoli.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -75,7 +80,30 @@ public class estadoSolicitud extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        daoControlador dao = new daoControlador();
+        Proyecto proyecto = null;
+        
+        String Nombre_Proyecto = request.getParameter("cboProyecto");
+        String Nombre = null;
+        String Equipo = null;
+        String Servicio = null;
+        String Estado = null;
+        
+        try {
+            proyecto = dao.estadoProyecto(Nombre_Proyecto);
+            Nombre = proyecto.getNombre_Proyecto();
+            Equipo = proyecto.getNombre_Equipo();
+            Servicio = proyecto.getServicio();
+            Estado = proyecto.getEstado();
+        } catch (Exception e) {
+            Logger.getLogger(estadoSolicitud.class.getName()).log(Level.SEVERE, null, e);
+        }
+        request.setAttribute("nombre", Nombre);
+        request.setAttribute("equipo", Equipo);
+        request.setAttribute("servicio", Servicio);
+        request.setAttribute("estado", Estado);
+        request.getRequestDispatcher("estadoSoli.jsp").forward(request, response);
+        
     }
 
     /**

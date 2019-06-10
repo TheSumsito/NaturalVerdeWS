@@ -7,8 +7,6 @@ package modelo.controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,14 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
 import modelo.entidades.Proyecto;
-import modelo.entidades.Trabajador;
+import modelo.entidades.Solicitud;
 
 /**
  *
  * @author mjara
  */
-@WebServlet(name = "informacionEquipo", urlPatterns = {"/informacionEquipo"})
-public class informacionEquipo extends HttpServlet {
+@WebServlet(name = "estadoHora", urlPatterns = {"/estadoHora"})
+public class estadoHora extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,18 +40,18 @@ public class informacionEquipo extends HttpServlet {
             throws ServletException, IOException {
         daoControlador dao = new daoControlador();
         HttpSession sesion = request.getSession();
+        
+        String rutcliente = (String) sesion.getAttribute("rut");
+        
         List<Proyecto> proyecto = null;
-
-        String RutCliente = (String) sesion.getAttribute("rut");
-
+        
         try {
-            proyecto = dao.buscarProyecto(RutCliente);
+            proyecto = dao.buscarProyecto(rutcliente);
         } catch (Exception e) {
-            Logger.getLogger(informacionEquipo.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(estadoHora.class.getName()).log(Level.SEVERE, null, e);
         }
-
         request.setAttribute("proyecto", proyecto);
-        request.getRequestDispatcher("informacionEqui.jsp").forward(request, response);
+        request.getRequestDispatcher("estadoHora.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -83,30 +81,29 @@ public class informacionEquipo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         daoControlador dao = new daoControlador();
-        Proyecto proyecto = null;
-        List<Trabajador> trabajador = null;
-
-        HttpSession sesion = request.getSession();
-
-        String Nombre_Equipo = request.getParameter("txtEquipo");
+        Solicitud solicitud = null;
+        
         String Nombre_Proyecto = request.getParameter("cboProyecto");
-        String boton = request.getParameter("btnAccion");
-        String equipo = null;
-
+        String nombre = null;
+        String fecha = null;
+        String hora = null;
+        String estado = null;
+        
         try {
-            if (boton.equals("Seleccionar")) {
-                proyecto = dao.buscarEquipo(Nombre_Proyecto);
-                equipo = proyecto.getNombre_Equipo();
-            } else if (boton.equals("Mostrar")) {
-                trabajador = dao.buscarTrabajador(Nombre_Equipo);
-            }
+            solicitud = dao.buscarSolicitud(Nombre_Proyecto);
+            nombre = solicitud.getNombre_Proyecto();
+            fecha = solicitud.getFecha();
+            hora = solicitud.getHora();
+            estado = solicitud.getEstado();
+            
         } catch (Exception e) {
-            Logger.getLogger(informacionEquipo.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(estadoHora.class.getName()).log(Level.SEVERE, null, e);
         }
-        request.setAttribute("equipo", equipo);
-        request.setAttribute("trabajador", trabajador);
-        request.getRequestDispatcher("informacionEqui.jsp").forward(request, response);
-
+        request.setAttribute("nombre", nombre);
+        request.setAttribute("fecha", fecha);
+        request.setAttribute("hora", hora);
+        request.setAttribute("estado", estado);
+        request.getRequestDispatcher("estadoHora.jsp").forward(request, response);
     }
 
     /**

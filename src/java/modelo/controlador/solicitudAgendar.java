@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
 import modelo.entidades.Proyecto;
 import modelo.entidades.Solicitud;
@@ -42,19 +43,19 @@ public class solicitudAgendar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            daoControlador dao = new daoControlador();
-            List<Proyecto> listadoProyecto = null;
+        daoControlador dao = new daoControlador();
+        HttpSession sesion = request.getSession();
+        List<Proyecto> proyecto = null;
 
-            try {
-                listadoProyecto = dao.listarProyecto();
-            } catch (SQLException ex) {
-                Logger.getLogger(solicitudAgendar.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            request.setAttribute("proyecto", listadoProyecto);
-            request.getRequestDispatcher("agendarHora.jsp").forward(request, response);
+        String RutCliente = (String) sesion.getAttribute("rut");
+
+        try {
+            proyecto = dao.buscarProyecto(RutCliente);
+        } catch (Exception e) {
+            Logger.getLogger(solicitudAgendar.class.getName()).log(Level.SEVERE, null, e);
         }
+        request.setAttribute("proyecto", proyecto);
+        request.getRequestDispatcher("agendarHora.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

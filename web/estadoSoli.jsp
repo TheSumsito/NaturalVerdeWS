@@ -48,7 +48,17 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="indexCli.jsp">Inicio</a></li>
                             <li><a href="solicitudProyecto">Solicitud en Linea</a></li>
-                            <li class="active"><a href="estadoSolicitud">Estado de Solicitud</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Estado de Solicitud
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="estadoSolicitud">SOLICITUD PROYECTO</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="estadoHora">HORA AGENDADA</a>
+                                </div>
+                            </li>s
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -86,7 +96,7 @@
             <br>
 
             <!-- INFORMACION SOBRE EL ESTADO DEL PROYECTO -->
-            <form action="#" method="POST">
+            <form action="estadoSolicitud" method="POST">
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
@@ -102,7 +112,7 @@
                                             <select class="form-control" name="cboProyecto" id="cboProyecto">
                                                 <option value="">Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
-                                                    <option value="">${pro.getNombre_Proyecto()}</option>
+                                                    <option>${pro.getNombre_Proyecto()}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -117,21 +127,39 @@
                                     <!-- EQUIPO A TERRENO -->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Equipo a Terreno</h5>
-                                        <input class="form-control" style="text-align: center" type="text"
-                                               name="txtEquipo" id="txtEquipo" readonly="true">
+                                        <c:if test="${equipo!=null}">
+                                            <input class="form-control" style="text-align: center" type="text"
+                                                   name="txtEquipo" id="txtEquipo" readonly="true" value="${equipo}">
+                                        </c:if>
+                                        <c:if test="${equipo==null}">
+                                            <input class="form-control" style="text-align: center" type="text"
+                                                   name="txtEquipo" id="txtEquipo" readonly="true"">
+                                        </c:if>
                                     </div>
 
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Servicio a Contratar</h5>
-                                        <input class="form-control" style="text-align: center" type="text"
-                                               name="txtServicio" id="txtServicio" readonly="true">
+                                        <c:if test="${servicio!=null}">
+                                            <input class="form-control" style="text-align: center" type="text"
+                                                   name="txtServicio" id="txtServicio" readonly="true" value="${servicio}">
+                                        </c:if>
+                                        <c:if test="${servicio==null}">
+                                            <input class="form-control" style="text-align: center" type="text"
+                                                   name="txtServicio" id="txtServicio" readonly="true">
+                                        </c:if>
                                     </div>
 
                                     <!--ESTADO SOLICITUD-->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Estado</h5>
-                                        <input class="form-control" style="text-align: center" type="text"
-                                               name="txtEstado" id="txtEstado" readonly="true">
+                                        <c:if test="${estado!=null}">
+                                            <input class="form-control" style="text-align: center" type="text"
+                                                   name="txtEstado" id="txtEstado" readonly="true" value="${estado}">
+                                        </c:if>
+                                        <c:if test="${estado==null}">
+                                            <input class="form-control" style="text-align: center" type="text"
+                                                   name="txtEstado" id="txtEstado" readonly="true" value="${estado}">
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
