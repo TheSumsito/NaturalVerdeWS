@@ -5,6 +5,7 @@
  */
 package modelo.controlador;
 
+import Correo.enviarCorreo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
+import modelo.entidades.Cliente;
 import modelo.entidades.Equipo;
 import modelo.entidades.Proyecto;
 
@@ -41,17 +43,22 @@ public class solicitudProyecto extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+
+            //LLAMAMOS AL DAOCONTROLADOR
             daoControlador dao = new daoControlador();
+            //CREAMOS UN LISTADO QUE ALMACENAREMOS TODOS LOS EQUIPOS EXISTENTES
             List<Equipo> listadoEquipo = null;
-            
+
             try {
                 listadoEquipo = dao.ListaEquipo();
             } catch (SQLException ex) {
                 Logger.getLogger(solicitudProyecto.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            //RETORNAR
             request.setAttribute("equipo", listadoEquipo);
             request.getRequestDispatcher("solicitudPro.jsp").forward(request, response);
-            
+
         }
     }
 
@@ -81,23 +88,40 @@ public class solicitudProyecto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        //IMPORTAMOS AL DAOCONTROLADOR
+        daoControlador dao = new daoControlador();
+
+        //OBTENEMOS LA SESION
+        HttpSession sesion = request.getSession();
+
+        //VARIABLES
         String Nombre = request.getParameter("txtNombre").toUpperCase();
         String Servicio = request.getParameter("cboServicio").toUpperCase();
         String Equipo = request.getParameter("cboEquipo").toUpperCase();
-
-        HttpSession sesion = request.getSession();
-
         String RutCliente = (String) sesion.getAttribute("rut");
         String Estado = "PENDIENTE";
-
-        Proyecto pro = new Proyecto(Nombre, Servicio, Estado, RutCliente, Equipo);
-        daoControlador dao = new daoControlador();
-
         boolean resp = false;
+
+        //CREAMOS UNA NUEVA SOLICITUD DE PROYECTO
+        Proyecto pro = new Proyecto(Nombre, Servicio, Estado, RutCliente, Equipo);
+
+        //LLAMAMOS AL ENVIO DE CORREO
+        enviarCorreo enviar = new enviarCorreo();
+
+        //VARIABLES DEL ENVIO DE CORREO
+        Cliente cliente = null;
+        String Correo = null;
+        String mensaje = "Su proyecto " + Nombre + " ah sido ingresado correctamente, Te enviaremos un correo para confirmar tu solicitud";
 
         try {
             if (dao.AgregarProyecto(pro)) {
+                cliente = dao.buscarCliente(RutCliente);
+                Correo = cliente.getCorreo();
                 resp = true;
+
+                //ENVIAMOS CONFIRMACION DE SOLICITUD AL CORREO DEL CLIENTE
+                enviar.SendMail(mensaje, Correo, Estado);
             } else {
                 resp = false;
             }
@@ -105,6 +129,8 @@ public class solicitudProyecto extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(solicitudProyecto.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //RETORNAR
         request.setAttribute("respuesta", resp);
         request.getRequestDispatcher("solicitudPro.jsp").forward(request, response);
     }

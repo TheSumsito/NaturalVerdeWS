@@ -88,8 +88,9 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center inner">
                         <div class="animatedParent">
-                            <c:if test="${username!=null}">
-                                <h1 class="animated fadeInDown borde-texto">Bienvenido</h1>
+                            <c:if test="${nombre!=null && apellido!=null}">
+                                <h1 class="animated fadeInDown borde-texto">BIENVENIDO</h1>
+                                <h1 class="animated fadeInDown borde-texto">${nombre} ${apellido}</h1>
                             </c:if>
                         </div>
                     </div>

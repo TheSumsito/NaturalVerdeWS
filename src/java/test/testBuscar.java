@@ -16,6 +16,7 @@ import modelo.dao.daoControlador;
 import modelo.entidades.Historial;
 import modelo.entidades.Insumo;
 import modelo.entidades.Proyecto;
+import modelo.entidades.Solicitud;
 import modelo.entidades.Trabajador;
 import oracle.net.aso.i;
 
@@ -30,11 +31,12 @@ public class testBuscar {
      */
     public static void main(String[] args) throws SQLException {
         daoControlador dao = new daoControlador();
-        List<Trabajador> nana = dao.buscarTrabajador("QMEMO");
+        List<Solicitud> nana = dao.fechaSolicitud("SISTEMA DE REGADO");
         
-        for (Trabajador tra : nana) {
-            System.out.println(tra.toString());
+        for (Solicitud soli : nana) {
+            System.out.println(soli.toString());
         }
+        
         
     }
 

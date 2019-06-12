@@ -234,20 +234,6 @@ public class NaturalWS {
         return null;
     }
 
-    /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "proyecto")
-    public Proyecto proyecto(@WebParam(name = "nombreProyecto") String nombreProyecto) {
-        daoControlador dao = new daoControlador();
-        
-        try {
-            return dao.estadoProyecto(nombreProyecto);
-        } catch (SQLException ex) {
-            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
 
 
 

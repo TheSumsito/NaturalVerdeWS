@@ -40,10 +40,14 @@ public class informacionEquipo extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //IMPORTAMOS AL DAOCONTROLADOR
         daoControlador dao = new daoControlador();
+        //LLAMAMOS LA SESION
         HttpSession sesion = request.getSession();
+        //CREAMOS UNA LISTA QUE LE PASAREMOS TODOS LOS PROYECTOS
         List<Proyecto> proyecto = null;
 
+        //VARIABLES
         String RutCliente = (String) sesion.getAttribute("rut");
 
         try {
@@ -52,6 +56,7 @@ public class informacionEquipo extends HttpServlet {
             Logger.getLogger(informacionEquipo.class.getName()).log(Level.SEVERE, null, e);
         }
 
+        //RETORNAR
         request.setAttribute("proyecto", proyecto);
         request.getRequestDispatcher("informacionEqui.jsp").forward(request, response);
     }
@@ -68,7 +73,25 @@ public class informacionEquipo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //IMPORTAMOS AL DAOCONTROLADOR
+        daoControlador dao = new daoControlador();
+        //CREAMOS UNA LISTA QUE LE ASIGNAREMOS TODOS LOS PROYECRTOS DEL CLIENTE
+        List<Proyecto> proyecto = null;
+        //OBTENEMOS LA SESION
+        HttpSession sesion = request.getSession();
+
+        //VARIABLES
+        String RutCliente = (String) sesion.getAttribute("rut");
+
+        try {
+            proyecto = dao.buscarProyecto(RutCliente);
+        } catch (SQLException ex) {
+            Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //RETORNAMOS
+        request.setAttribute("proyecto", proyecto);
+        request.getRequestDispatcher("informacionEqui.jsp").forward(request, response);
     }
 
     /**
@@ -82,12 +105,20 @@ public class informacionEquipo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //IMPORTAMOS AL DAOCONTROLADOR
         daoControlador dao = new daoControlador();
-        Proyecto proyecto = null;
+        //CREAMOS UNA LISTA QUE LE PASAREMOS TODOS LOS PROYECTOS
+        List<Proyecto> listadoProyecto = null;
+        //CREAMOS UNA LISTA QUE LE PASAREMOS TODOS LOS TRABAJADORES
         List<Trabajador> trabajador = null;
+        //LLAMAMOS A LA ENTIDAD PROYECTO
+        Proyecto proyecto = null;
 
+        //OBTENEMOS LA SESION
         HttpSession sesion = request.getSession();
-
+        
+        //VARIABLES
+        String RutCliente = (String) sesion.getAttribute("rut");
         String Nombre_Equipo = request.getParameter("txtEquipo");
         String Nombre_Proyecto = request.getParameter("cboProyecto");
         String boton = request.getParameter("btnAccion");
@@ -97,12 +128,17 @@ public class informacionEquipo extends HttpServlet {
             if (boton.equals("Seleccionar")) {
                 proyecto = dao.buscarEquipo(Nombre_Proyecto);
                 equipo = proyecto.getNombre_Equipo();
+                listadoProyecto = dao.buscarProyecto(RutCliente);
             } else if (boton.equals("Mostrar")) {
                 trabajador = dao.buscarTrabajador(Nombre_Equipo);
+                listadoProyecto = dao.buscarProyecto(RutCliente);
             }
         } catch (Exception e) {
             Logger.getLogger(informacionEquipo.class.getName()).log(Level.SEVERE, null, e);
         }
+        
+        //RETORNAMOS
+        request.setAttribute("proyecto", listadoProyecto);
         request.setAttribute("equipo", equipo);
         request.setAttribute("trabajador", trabajador);
         request.getRequestDispatcher("informacionEqui.jsp").forward(request, response);

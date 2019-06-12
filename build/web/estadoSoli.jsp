@@ -106,6 +106,7 @@
 
                                         <!-- SELECCIONAR PROYECTO -->
                                         <div class="service-desc form-group col-md">
+                                            <!-- RESCATA LOS PROYECTO-->
                                             <h5>Mis Proyectos</h5>
                                             <hr>
                                             <br>
@@ -116,12 +117,22 @@
                                                 </c:forEach>
                                             </select>
                                         </div>
-
-
                                         <!-- BOTON SELECCIONAR-->
                                         <div class="service-desc form-group">
-                                            <input class="btn btn-skin" type="submit" value="Seleccionar">
+                                            <input class="btn btn-skin" type="submit" name="btnAccion" value="Seleccionar">
                                         </div>
+
+                                    </div>
+                                    
+                                    <!-- NOMBRE PROYECTO-->
+                                    <div class="service-desc form-group col-md-6">
+                                        <h5>Nombre Proyecto</h5>
+                                        <c:if test="${nombreProyecto!=null}">
+                                            <input class="form-control" style="text-align: center" type="text" name="txtNombre" readonly="true" value="${nombreProyecto}">
+                                        </c:if>
+                                        <c:if test="${nombreProyecto==null}">
+                                            <input class="form-control" style="text-align: center" type="text" name="txtNombre" readonly="true">
+                                        </c:if>
                                     </div>
 
                                     <!-- EQUIPO A TERRENO -->

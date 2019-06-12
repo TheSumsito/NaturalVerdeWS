@@ -5,6 +5,7 @@
  */
 package modelo.controlador;
 
+import Correo.enviarCorreo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -37,22 +38,31 @@ public class registroUsuario extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //CLIENTE
+        //IMPORTAMOS AL DAOCONTROLADOR
+        daoControlador dao = new daoControlador();
+
+        //VARIABLES CLIENTE
         String RutCliente = request.getParameter("txtRut").toUpperCase();
         String Nombre = request.getParameter("txtNombre").toUpperCase();
         String Apellido = request.getParameter("txtApellido").toUpperCase();
         int Telefono = Integer.parseInt(request.getParameter("txtNumero").toUpperCase());
         String Correo = request.getParameter("txtCorreo").toUpperCase();
 
+        //CREAMOS UN NUEVO CLIENTE
         Cliente cli = new Cliente(RutCliente, Nombre, Apellido, Telefono, Correo);
 
-        //USUARIO
+        //VARIABLES USUARIO
         String Contrasena = request.getParameter("txtPass");
         String Tipo = "CLIENTE";
 
+        //CREAMOS UN NUEVO USUARIO
         Usuario usu = new Usuario(RutCliente, Contrasena, Tipo);
 
-        daoControlador dao = new daoControlador();
+        //LLAMAMOS AL ENVIO POR CORREO
+        enviarCorreo enviar = new enviarCorreo();
+        
+        //VARIABLES CORREO
+        String Mensaje = "Bienvenido, Gracias por preferirnos, para loguearse a nuestros sistemas solo necesitas Tu Correo y la contraseña que acabaste de Ingresar " + Contrasena + "";
 
         boolean resp = false;
 
@@ -60,6 +70,8 @@ public class registroUsuario extends HttpServlet {
             if (dao.AgregarCliente(cli)) {
                 if (dao.AgregarUsuario(usu)) {
                     resp = true;
+                    //ENVIAMOS CORREO ELECTRONICO
+                    enviar.SendMail(Mensaje, Correo, Tipo);
                 }
             } else {
                 resp = false;
@@ -67,6 +79,8 @@ public class registroUsuario extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(registroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //RETORNAR
         request.setAttribute("respuesta", resp);
         request.getRequestDispatcher("registro.jsp").forward(request, response);
     }

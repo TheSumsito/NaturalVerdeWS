@@ -38,18 +38,22 @@ public class estadoHora extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //IMPORTAMOS AL DAOCONTROLADOR
         daoControlador dao = new daoControlador();
+        //LLAMAMOS A LA SESION
         HttpSession sesion = request.getSession();
-        
-        String rutcliente = (String) sesion.getAttribute("rut");
-        
+        //CREAMOS UNA LISTA PARA PASARLE TODOS LOS PROYECTOS ASIGNADOS A UN USUARIO
         List<Proyecto> proyecto = null;
-        
+
+        //VARIABLES
+        String rutcliente = (String) sesion.getAttribute("rut");
+
         try {
             proyecto = dao.buscarProyecto(rutcliente);
         } catch (Exception e) {
             Logger.getLogger(estadoHora.class.getName()).log(Level.SEVERE, null, e);
         }
+        //RETORNAMOS
         request.setAttribute("proyecto", proyecto);
         request.getRequestDispatcher("estadoHora.jsp").forward(request, response);
     }
@@ -80,29 +84,58 @@ public class estadoHora extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //IMPORTAMOS AL DAOCONTROLADOR
         daoControlador dao = new daoControlador();
+        //LLAMAMOS A LA ENTIDAD SOLICITUD
         Solicitud solicitud = null;
-        
+        //CREAMOS ARREGLO SOLICITUD PARA PASARLE LAS FECHAS EXISTENTES
+        List<Solicitud> fechaSolicitud = null;
+        //CREAMOS ARREGLO PROYECTO PARA PASEARLE LOS PROYECTOS EXISTENTES
+        List<Proyecto> proyecto = null;
+        //LLAMAMOS A LA ENTIDAD PROYECTO
+        Proyecto detalles = null;
+
+        //LLAMAMOS A LA SESION
+        HttpSession sesion = request.getSession();
+
+        //VARIABLES
         String Nombre_Proyecto = request.getParameter("cboProyecto");
-        String nombre = null;
+        String nombrePro = null;
+        String fechaPro = request.getParameter("cboFecha");
         String fecha = null;
         String hora = null;
         String estado = null;
-        
+        String rutcliente = (String) sesion.getAttribute("rut");
+        String boton = request.getParameter("btnAccion");
+
         try {
-            solicitud = dao.buscarSolicitud(Nombre_Proyecto);
-            nombre = solicitud.getNombre_Proyecto();
-            fecha = solicitud.getFecha();
-            hora = solicitud.getHora();
-            estado = solicitud.getEstado();
-            
+            //FUNCION BOTON SELECCIONAR
+            if (boton.equals("Seleccionar")) {
+                proyecto = dao.buscarProyecto(rutcliente);
+                detalles = dao.estadoProyecto(Nombre_Proyecto);
+                nombrePro = detalles.getNombre_Proyecto();
+                fechaSolicitud = dao.fechaSolicitud(Nombre_Proyecto);
+                //FUNCION BOTON MOSTRAR
+            } else if (boton.equals("Mostrar")) {
+                proyecto = dao.buscarProyecto(rutcliente);
+                solicitud = dao.filtrarFecha(fechaPro);
+                nombrePro = solicitud.getNombre_Proyecto();
+                fecha = solicitud.getFecha();
+                hora = solicitud.getHora();
+                estado = solicitud.getEstado();
+            }
+
         } catch (Exception e) {
             Logger.getLogger(estadoHora.class.getName()).log(Level.SEVERE, null, e);
         }
-        request.setAttribute("nombre", nombre);
+        //RETORNAMOS
+        request.setAttribute("nombreProyecto", Nombre_Proyecto);
+        request.setAttribute("nombrePro", nombrePro);
         request.setAttribute("fecha", fecha);
         request.setAttribute("hora", hora);
         request.setAttribute("estado", estado);
+        request.setAttribute("proyecto", proyecto);
+        request.setAttribute("fechaSoli", fechaSolicitud);
         request.getRequestDispatcher("estadoHora.jsp").forward(request, response);
     }
 

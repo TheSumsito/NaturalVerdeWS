@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
+import modelo.entidades.Historial;
 import modelo.entidades.Proyecto;
 
 /**
@@ -38,17 +39,23 @@ public class estadoSolicitud extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //IMPORTAMOS AL DAOCONTROLADOR
         daoControlador dao = new daoControlador();
+        //OBTENEMOS LA SESION
         HttpSession sesion = request.getSession();
-
-        String RutCliente = (String) sesion.getAttribute("rut");
+        //CREAMOS UN LISTADO PARA PASARLE TODOS LOS PROYECTOS EXISTENTES DEL CLIENTE
         List<Proyecto> proyecto = null;
+
+        //VARIABLES
+        String RutCliente = (String) sesion.getAttribute("rut");
 
         try {
             proyecto = dao.buscarProyecto(RutCliente);
         } catch (Exception e) {
             Logger.getLogger(estadoSolicitud.class.getName()).log(Level.SEVERE, null, e);
         }
+
+        //RETORNAMOS
         request.setAttribute("proyecto", proyecto);
         request.getRequestDispatcher("estadoSoli.jsp").forward(request, response);
 
@@ -80,30 +87,44 @@ public class estadoSolicitud extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //IMPORTAMOS AL DAOCONTROLADOR
         daoControlador dao = new daoControlador();
-        Proyecto proyecto = null;
-        
+        //LLAMAMOS A LA ENTIDAD PROYECTO
+        Proyecto pro = null;
+        //CREAMOS UN LISTADO QUE LE PASAREMOS LOS PROYECTOS DEL CLIENTE
+        List<Proyecto> proyecto = null;
+
+        //OBTENEMOS LA SESION
+        HttpSession sesion = request.getSession();
+
+        //VARIABLES
         String Nombre_Proyecto = request.getParameter("cboProyecto");
-        String Nombre = null;
+        String NombreProyecto = null;
         String Equipo = null;
         String Servicio = null;
         String Estado = null;
-        
+        String RutCliente = (String) sesion.getAttribute("rut");
+        String Boton = request.getParameter("btnAccion");
+
         try {
-            proyecto = dao.estadoProyecto(Nombre_Proyecto);
-            Nombre = proyecto.getNombre_Proyecto();
-            Equipo = proyecto.getNombre_Equipo();
-            Servicio = proyecto.getServicio();
-            Estado = proyecto.getEstado();
+            pro = dao.estadoProyecto(Nombre_Proyecto);
+            proyecto = dao.buscarProyecto(RutCliente);
+            NombreProyecto = pro.getNombre_Proyecto();
+            Equipo = pro.getNombre_Equipo();
+            Servicio = pro.getServicio();
+            Estado = pro.getEstado();
         } catch (Exception e) {
             Logger.getLogger(estadoSolicitud.class.getName()).log(Level.SEVERE, null, e);
         }
-        request.setAttribute("nombre", Nombre);
+
+        //RETORNAMOS
+        request.setAttribute("nombreProyecto", NombreProyecto);
         request.setAttribute("equipo", Equipo);
         request.setAttribute("servicio", Servicio);
         request.setAttribute("estado", Estado);
+        request.setAttribute("proyecto", proyecto);
         request.getRequestDispatcher("estadoSoli.jsp").forward(request, response);
-        
+
     }
 
     /**

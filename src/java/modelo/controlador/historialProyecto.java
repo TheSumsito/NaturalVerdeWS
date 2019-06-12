@@ -40,10 +40,14 @@ public class historialProyecto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //IMPORTAMOS AL DAOCONTROLADOR
         daoControlador dao = new daoControlador();
+        //OBTENEMOS LA SESION
         HttpSession sesion = request.getSession();
+        //CREAMOS UN LISTADO QUE ALMACENAMOS LOS PROYECTOS DEL CLIENTE
         List<Proyecto> proyecto = null;
 
+        //VARIABLES
         String RutCliente = (String) sesion.getAttribute("rut");
 
         try {
@@ -51,6 +55,8 @@ public class historialProyecto extends HttpServlet {
         } catch (Exception e) {
             Logger.getLogger(historialProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
+
+        //RETORNAMOS
         request.setAttribute("proyecto", proyecto);
         request.getRequestDispatcher("historialPro.jsp").forward(request, response);
     }
@@ -81,17 +87,30 @@ public class historialProyecto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //IMPORTAMOS AL DAOCONTROLADOR
         daoControlador dao = new daoControlador();
+        //CREAMOS UN LISTADO QUE LE PASAMOS TODOS LOS PROYECTOS DEL CLIENTE
+        List<Proyecto> proyecto = null;
+        //CREAMOS UN LISTADO QUE LE PASAMOS TODOS LOS HISTORIALES DEL PROYECTO
         List<Historial> Historial = new ArrayList<Historial>();
-        
+
+        //OBTENEMOS LA SESION
+        HttpSession sesion = request.getSession();
+
+        //VARIABLES
         String Nombre_Proyecto = request.getParameter("cboProyecto");
-        
+        String RutCliente = (String) sesion.getAttribute("rut");
+
         try {
             Historial = dao.buscarHistorial(Nombre_Proyecto);
+            proyecto = dao.buscarProyecto(RutCliente);
         } catch (Exception e) {
             Logger.getLogger(historialProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
+
+        //RETORNAMOS
         request.setAttribute("historial", Historial);
+        request.setAttribute("proyecto", proyecto);
         request.getRequestDispatcher("historialPro.jsp").forward(request, response);
 
     }

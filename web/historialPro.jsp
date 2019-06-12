@@ -36,7 +36,7 @@
                 <div class="container">
                     <div class="col-md-2">
                         <div class="site-logo">
-                            <a href="index.jsp" class="brand">NaturalVerde</a>
+                            <a href="indexCli.jsp" class="brand">NaturalVerde</a>
                         </div>
                     </div>
                     <div class="navbar-header">

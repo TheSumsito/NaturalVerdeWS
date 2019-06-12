@@ -5,6 +5,7 @@
  */
 package modelo.controlador;
 
+import Correo.enviarCorreo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
+import modelo.entidades.Cliente;
 import modelo.entidades.Proyecto;
 import modelo.entidades.Solicitud;
 
@@ -43,10 +45,14 @@ public class solicitudAgendar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //IMPORTAMOS AL DAOCONTROLADOR
         daoControlador dao = new daoControlador();
+        //OBTENEMOS LA SESION
         HttpSession sesion = request.getSession();
+        //CREAMOS UN LISTADO QUE ALMACENAREMOS TODOS LO PROYECTOS DEL CLIENTE
         List<Proyecto> proyecto = null;
 
+        //VARIABLES
         String RutCliente = (String) sesion.getAttribute("rut");
 
         try {
@@ -54,6 +60,8 @@ public class solicitudAgendar extends HttpServlet {
         } catch (Exception e) {
             Logger.getLogger(solicitudAgendar.class.getName()).log(Level.SEVERE, null, e);
         }
+
+        //RETORNAR
         request.setAttribute("proyecto", proyecto);
         request.getRequestDispatcher("agendarHora.jsp").forward(request, response);
     }
@@ -84,27 +92,53 @@ public class solicitudAgendar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        boolean resp = false;
-        Random generadorAleatorios = new Random();
-        int CodSolicitud = 1 + generadorAleatorios.nextInt(100000);
 
+        //IMPORTAMOS AL DAOCONTROLADOR
+        daoControlador dao = new daoControlador();
+        //CREAMOS UN LISTADO QUE ALMACENAREMOS TODOS LOS PROYECTOS DEL CLIENTE
+        List<Proyecto> listadoProyecto = null;
+        //CREAMOS UN RANDOM PARA ASIGNAR UN COD ALEATORIO A LA SOLICITUD
+        Random generadorAleatorios = new Random();
+
+        //OBTENEMOS LA SESION
+        HttpSession sesion = request.getSession();
+
+        //VARIABLES
+        int CodSolicitud = 1 + generadorAleatorios.nextInt(100000);
         int Codigo = CodSolicitud;
         String Hora = request.getParameter("txtHora");
         String Fecha = request.getParameter("txtFecha");
         String Estado = "PENDIENTE";
         String Proyecto = request.getParameter("cboProyecto");
+        String RutCliente = (String) sesion.getAttribute("rut");
+        boolean resp = false;
 
+        //LLAMAMOS AL ENVIO DE CORREO
+        enviarCorreo enviar = new enviarCorreo();
+        //VARIABLES CORREO
+        String mensaje = "Su solicitud " + CodSolicitud + " ah sido ingresada correctamente, Te enviaremos un correo para confirmar tu solicitud";
+        Cliente cliente = null;
+        Proyecto pro = null;
+        String Correo = null;
+        
+        //CREAMOS UNA NUEVA SOLICITUD
         Solicitud soli = new Solicitud(Codigo, Hora, Fecha, Estado, Proyecto);
-        daoControlador dao = new daoControlador();
-        List<Proyecto> listadoProyecto = null;
 
         try {
             if (dao.AgregarSolicitud(soli)) {
+                cliente = dao.buscarCliente(RutCliente);
+                Correo = cliente.getCorreo();
+                listadoProyecto = dao.buscarProyecto(RutCliente);
                 resp = true;
+                
+                //ENVIAMOS SOLICITUD A CORREO ELECTRONICO
+                enviar.SendMail(mensaje, Correo, Estado);
             }
         } catch (SQLException ex) {
             Logger.getLogger(solicitudAgendar.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //RETORNAR
         request.setAttribute("respuesta", resp);
         request.setAttribute("proyecto", listadoProyecto);
         request.getRequestDispatcher("agendarHora.jsp").forward(request, response);

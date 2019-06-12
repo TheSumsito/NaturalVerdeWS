@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
+import modelo.entidades.Cliente;
 import modelo.entidades.Usuario;
 
 /**
@@ -80,15 +81,29 @@ public class loginUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //IMPORTAMOS AL DAOCONTROLADOR
+        daoControlador dao = new daoControlador();
+        //LLAMAMOS A LA ENTIDAD CLIENTE
+        Cliente cliente = null;
+
+        //LLAMAMOS A LA SESION
+        HttpSession session = request.getSession();
+
+        //VARIABLES
         String Rut = request.getParameter("txtRut").toUpperCase();
         String Contrasena = request.getParameter("txtPass");
-        
-        daoControlador dao = new daoControlador();
-        HttpSession session = request.getSession();
-        
-        
+        String Nombre = null;
+        String Apellido = null;
+
         try {
             if (dao.Login(Rut, Contrasena)) {
+                cliente = dao.buscarCliente(Rut);
+                Nombre = cliente.getNombre();
+                Apellido = cliente.getApellido();
+                
+                //RETORNAMOS
+                session.setAttribute("nombre", Nombre);
+                session.setAttribute("apellido", Apellido);
                 session.setAttribute("rut", Rut);
                 session.setAttribute("pass", Contrasena);
                 request.getRequestDispatcher("indexCli.jsp").forward(request, response);
@@ -98,6 +113,7 @@ public class loginUsuario extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(loginUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //ENTRAMOS A LA VISTA LOGIN 
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 

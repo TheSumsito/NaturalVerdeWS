@@ -46,7 +46,6 @@ public class insumoProyecto extends HttpServlet {
         HttpSession sesion = request.getSession();
         String RutCliente = (String) sesion.getAttribute("rut");
 
-
         try {
             Proyecto = dao.buscarProyecto(RutCliente);
         } catch (Exception e) {
@@ -84,7 +83,7 @@ public class insumoProyecto extends HttpServlet {
             throws ServletException, IOException {
         daoControlador dao = new daoControlador();
         List<Insumo> Insumo = new ArrayList<Insumo>();
-        List<Proyecto> Proyecto = new ArrayList<Proyecto>();
+        List<Proyecto> proyecto = null;
         
         HttpSession sesion = request.getSession();
         String RutCliente = (String) sesion.getAttribute("rut");
@@ -93,11 +92,11 @@ public class insumoProyecto extends HttpServlet {
         
         try {
             Insumo = dao.buscarInsumo(Nombre_Proyecto);
-            Proyecto = dao.buscarProyecto(Nombre_Proyecto);
+            proyecto = dao.buscarProyecto(RutCliente);
         } catch (Exception e) {
             Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
-        request.setAttribute("proyecto", Proyecto);
+        request.setAttribute("proyecto", proyecto);
         request.setAttribute("insumo", Insumo);
         request.getRequestDispatcher("insumoPro.jsp").forward(request, response);
     }
