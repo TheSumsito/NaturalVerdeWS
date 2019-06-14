@@ -779,7 +779,7 @@ public class daoControlador {
         return proyecto;
     }
 
-    public Cliente buscarCliente(String rut) {
+    public Cliente buscarCliente(String rut) throws SQLException {
         Cliente cliente = new Cliente("false", "false", "false", 0, "false");
         try {
             this.conexion = new Conexion().obtenerConexion();
@@ -799,10 +799,149 @@ public class daoControlador {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        } finally {
+            this.conexion.close();
         }
         return cliente;
     }
 
+    public List<Proyecto> detalleProyecto(String nombre) throws SQLException {
+        List<Proyecto> proyecto = new ArrayList<Proyecto>();
+
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String detalleProyecto = "SELECT * FROM PROYECTO WHERE NOMBRE_PROYECTO='" + nombre + "'";
+            CallableStatement cstmt = this.conexion.prepareCall(detalleProyecto);
+            cstmt.execute();
+
+            ResultSet rs = cstmt.getResultSet();
+
+            while (rs.next()) {
+                Proyecto pro = new Proyecto();
+                pro.setServicio(rs.getString("Servicio"));
+                pro.setNombre_Equipo(rs.getString("Nombre_Equipo"));
+                pro.setEstado(rs.getString("Estado"));
+
+                proyecto.add(pro);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return proyecto;
+    }
+
+    public List<Solicitud> fechaProyecto(String fecha) throws SQLException {
+        List<Solicitud> solicitud = new ArrayList<Solicitud>();
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String fechaProyecto = "SELECT * FROM SOLICITUD WHERE FECHA='" + fecha + "'";
+            CallableStatement cstmt = this.conexion.prepareCall(fechaProyecto);
+            cstmt.execute();
+
+            ResultSet rs = cstmt.getResultSet();
+
+            while (rs.next()) {
+                Solicitud soli = new Solicitud();
+                soli.setCodSolicitud(rs.getInt("CodSolicitud"));
+                soli.setHora(rs.getString("Hora"));
+                soli.setFecha(rs.getString("Fecha"));
+                soli.setEstado(rs.getString("Estado"));
+
+                solicitud.add(soli);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return solicitud;
+    }
+
+    public List<Solicitud> detalleSolicitud(String nombre) throws SQLException {
+        List<Solicitud> solicitud = new ArrayList<Solicitud>();
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String detalleSolicitud = "SELECT * FROM SOLICITUD WHERE NOMBRE_PROYECTO='" + nombre + "'";
+            CallableStatement cstmt = this.conexion.prepareCall(detalleSolicitud);
+            cstmt.execute();
+
+            ResultSet rs = cstmt.getResultSet();
+
+            while (rs.next()) {
+                Solicitud soli = new Solicitud();
+                soli.setCodSolicitud(rs.getInt("CodSolicitud"));
+                soli.setNombre_Proyecto(rs.getString("Nombre_Proyecto"));
+                soli.setHora(rs.getString("Hora"));
+                soli.setFecha(rs.getString("Fecha"));
+                soli.setEstado(rs.getString("Estado"));
+
+                solicitud.add(soli);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return solicitud;
+    }
+    
+    
+    public List<Historial> faseHistorial(String nombre) throws SQLException{
+        List<Historial> historial = new ArrayList<Historial>();
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String faseHistorial = "SELECT * FROM HISTORIAL WHERE NOMBRE_PROYECTO='"+nombre+"'";
+            CallableStatement cstmt = this.conexion.prepareCall(faseHistorial);
+            cstmt.execute();
+            
+            ResultSet rs = cstmt.getResultSet();
+            
+            while(rs.next()){
+                Historial hist = new Historial();
+                hist.setFase(rs.getInt("Fase"));
+                
+                historial.add(hist);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally{
+            this.conexion.close();
+        }
+        return historial;
+    }
+
+    public List<Historial> detalleHistorial (int fase) throws SQLException{
+        List<Historial> historial = new ArrayList<Historial>();
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String detalleHistorial = "SELECT * FROM HISTORIAL WHERE FASE='"+fase+"'";
+            CallableStatement cstmt = this.conexion.prepareCall(detalleHistorial);
+            cstmt.execute();
+            
+            ResultSet rs = cstmt.getResultSet();
+            
+            while(rs.next()){
+                Historial hist = new Historial();
+                hist.setFase(rs.getInt("Fase"));
+                hist.setFecha(rs.getString("Fecha"));
+                hist.setDescripcion(rs.getString(("Descripcion")));
+                hist.setEstado(rs.getString("Estado"));
+                hist.setNombre_Proyecto(rs.getString("Nombre_Proyecto"));
+                
+                historial.add(hist);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return historial;
+    }
+    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //MODIFICAR
     //CAMBIAR EL ESTADO DE UN PROYECTO GENERADO POR EL CLIENTE
@@ -842,7 +981,7 @@ public class daoControlador {
             //OBTENEMOS LA CONEXION
             this.conexion = new Conexion().obtenerConexion();
             //LLAMAMOS AL PROCEDIMIENTO ALMACENANDOLO EN UNA VARIABLE
-            String cambiarEstado = "{ CALL SP_CAMBIAR_ESTADO_SOLICITUD (?,?,?,?,?)}";
+            String cambiarEstado = "{ CALL SP_CAMBIAR_ESTADO_SOLICITUD (?,?,?,?,?) }";
             //LLAMAMOS A LA CONEXION NUEVAMENTE PARA ASI VALIDAR EL ARREGLO ALMACENADO
             CallableStatement cstmt = this.conexion.prepareCall(cambiarEstado);
             //VARIABLES DE CAPTURA
@@ -860,6 +999,29 @@ public class daoControlador {
             System.out.println(e.getMessage());
         } finally {
             //CERRAMOS LA CONEXION
+            this.conexion.close();
+        }
+        return respuesta;
+    }
+
+    public boolean cambiarEstadoHist(Historial hist) throws SQLException {
+        boolean respuesta = false;
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String cambiarEstado = "{ CALL SP_CAMBIAR_ESTADO_HISTORIAL(?,?,?,?) }";
+            CallableStatement cstmt = this.conexion.prepareCall(cambiarEstado);
+        
+            cstmt.setString(1, hist.getFecha());
+            cstmt.setString(2, hist.getDescripcion());
+            cstmt.setString(3, hist.getEstado());
+            cstmt.setString(4, hist.getNombre_Proyecto());
+
+            if (cstmt.executeUpdate() == 1) {
+                respuesta = true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
             this.conexion.close();
         }
         return respuesta;
@@ -893,6 +1055,30 @@ public class daoControlador {
             System.out.println(e.getMessage());
         } finally {
             //CERRAMOS LA CONEXION
+            this.conexion.close();
+        }
+        return respuesta;
+    }
+
+    public boolean LoginAdmin(String usuario, String contrasena) throws SQLException {
+        boolean respuesta = false;
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String loginAdmin = "SELECT * FROM ADMINISTRADOR WHERE USUARIO='" + usuario + "' AND CONTRASENA ='" + contrasena + "'";
+            CallableStatement cstmt = this.conexion.prepareCall(loginAdmin);
+            cstmt.setString(1, usuario);
+            cstmt.setString(2, contrasena);
+
+            cstmt.execute();
+
+            ResultSet rs = cstmt.getResultSet();
+
+            while (rs.next()) {
+                respuesta = true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
             this.conexion.close();
         }
         return respuesta;
@@ -952,6 +1138,33 @@ public class daoControlador {
             this.conexion.close();
         }
         return respuesta;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //OPERACIONES
+    public List<Insumo> totalPagar(String nombre) throws SQLException {
+        List<Insumo> total = new ArrayList<Insumo>();
+
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String totalPagar = "SELECT SUM(PRECIO) FROM INSUMO WHERE NOMBRE_PROYECTO='" + nombre + "'";
+            CallableStatement cstmt = this.conexion.prepareCall(totalPagar);
+            cstmt.execute();
+
+            ResultSet rs = cstmt.getResultSet();
+
+            while (rs.next()) {
+                Insumo insu = new Insumo();
+                insu.setPrecio(rs.getInt("Precio"));
+
+                total.add(insu);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return total;
     }
 
 }

@@ -110,7 +110,7 @@
                                             <h5>Mis Proyectos</h5>
                                             <hr>
                                             <br>
-                                            <select class="form-control" name="cboProyecto" id="cboProyecto">
+                                            <select class="form-control" name="cboProyecto" id="cboProyecto" required>
                                                 <option value="">Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
                                                     <option>${pro.getNombre_Proyecto()}</option>
@@ -144,7 +144,7 @@
                                         </c:if>
                                         <c:if test="${equipo==null}">
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtEquipo" id="txtEquipo" readonly="true"">
+                                                   name="txtEquipo" id="txtEquipo" readonly="true">
                                         </c:if>
                                     </div>
 

@@ -119,7 +119,7 @@
                                         <!-- SELECCIONAR PROYECTO -->
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Mis Proyectos</h5>
-                                            <select class="form-control" name="cboProyecto" id="cboProyecto">
+                                            <select class="form-control" name="cboProyecto" id="cboProyecto" required>
                                                 <option value="">Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
                                                     <option>${pro.getNombre_Proyecto()}</option>
@@ -131,14 +131,14 @@
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Fecha a Terreno</h5>
                                             <input class="form-control" style="text-align: center" type="date"
-                                                   name="txtFecha" id="txtFecha">
+                                                   name="txtFecha" id="txtFecha" required>
                                         </div>
 
                                         <!-- HORA A TERRENO -->
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Hora a Terreno</h5>
                                             <input class="form-control" style="text-align: center" type="time"
-                                                   name="txtHora" id="txtHora">
+                                                   name="txtHora" id="txtHora" required>
                                         </div>
 
 

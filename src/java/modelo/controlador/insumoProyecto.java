@@ -84,20 +84,22 @@ public class insumoProyecto extends HttpServlet {
         daoControlador dao = new daoControlador();
         List<Insumo> Insumo = new ArrayList<Insumo>();
         List<Proyecto> proyecto = null;
+        List<Insumo> total = null;
         
         HttpSession sesion = request.getSession();
         String RutCliente = (String) sesion.getAttribute("rut");
-        
         String Nombre_Proyecto = request.getParameter("cboProyecto");
         
         try {
             Insumo = dao.buscarInsumo(Nombre_Proyecto);
             proyecto = dao.buscarProyecto(RutCliente);
+            total = dao.totalPagar(Nombre_Proyecto);
         } catch (Exception e) {
             Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
         request.setAttribute("proyecto", proyecto);
         request.setAttribute("insumo", Insumo);
+        request.setAttribute("total", total);
         request.getRequestDispatcher("insumoPro.jsp").forward(request, response);
     }
 

@@ -189,7 +189,9 @@
                                     </div>
                                     <div class="box-register container-fluid">
                                         <div class="service-desc form-group col-md">
-                                            <h5>Valor Total: <span>$ ${total}</span></h5>
+                                            <c:if test="${total!=null}">
+                                                <h5>Valor Total: <span>$ ${total}</span></h5>
+                                            </c:if>
                                         </div>
                                         <!-- BOTONES -->
                                         <div class="services-desc col-md">

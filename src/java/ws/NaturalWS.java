@@ -234,6 +234,131 @@ public class NaturalWS {
         return null;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "detalleProyecto")
+    public List<Proyecto> detalleProyecto(@WebParam(name = "nombreProyecto") String nombreProyecto) {
+        daoControlador dao = new daoControlador();
+        
+        try {
+            return dao.detalleProyecto(nombreProyecto);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fechaSolicitud")
+    public List<Solicitud> fechaSolicitud(@WebParam(name = "nombreProyecto") String nombreProyecto) {
+        daoControlador dao = new daoControlador();
+        
+        try {
+            return dao.fechaSolicitud(nombreProyecto);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "fechaProyecto")
+    public List<Solicitud> fechaProyecto(@WebParam(name = "fecha") String fecha) {
+        daoControlador dao = new daoControlador();
+        
+        try {
+            return dao.fechaProyecto(fecha);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "detalleSolicitud")
+    public List<Solicitud> detalleSolicitud(@WebParam(name = "nombreProyecto") String nombreProyecto) {
+        daoControlador dao = new daoControlador();
+        try {
+            return dao.detalleSolicitud(nombreProyecto);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "loginAdmin")
+    public boolean loginAdmin(@WebParam(name = "usuario") String usuario, @WebParam(name = "contrasena") String contrasena) {
+        daoControlador dao = new daoControlador();
+        
+        try {
+            dao.LoginAdmin(usuario, contrasena);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "estadoHistorial")
+    public boolean estadoHistorial(@WebParam(name = "hist") Historial hist) {
+        daoControlador dao = new daoControlador();
+        try {
+            dao.cambiarEstadoHist(hist);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "faseHistorial")
+    public List<Historial> faseHistorial(@WebParam(name = "nombreProyecto") String nombreProyecto) {
+        daoControlador dao = new daoControlador();
+        try {
+            return dao.faseHistorial(nombreProyecto);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "detalleHistorial")
+    public List<Historial> detalleHistorial(@WebParam(name = "fase") int fase) {
+        daoControlador dao = new daoControlador();
+        try {
+            return dao.detalleHistorial(fase);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
 
 
 

@@ -108,7 +108,7 @@
                                             <hr>
                                             <br>
                                             <select class="form-control" name="cboProyecto" id="cboProyecto">
-                                                <option value="">Seleccionar</option>
+                                                <option value="Seleccionar">Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
                                                     <option value="${pro.getNombre_Proyecto()}">${pro.getNombre_Proyecto()}</option>
                                                 </c:forEach>

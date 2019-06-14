@@ -118,13 +118,14 @@
                                     <!-- NOMBRE PROYECTO NUEVO -->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Nombre Proyecto:</h5>
-                                        <input class="form-control" style="text-align: center" type="text" name="txtNombre">
+                                        <input class="form-control" style="text-align: center" type="text" name="txtNombre" 
+                                               title="Solo Puedes Ingresar Letras" pattern="[a-zA-Z]+" required>
                                     </div>
 
                                     <!-- SERVICIO A CONTRATAR -->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Servicio a Contratar:</h5>
-                                        <select class="form-control" name="cboServicio" id="cboServicio">
+                                        <select class="form-control" name="cboServicio" id="cboServicio" required>
                                             <option value="">Seleccionar</option>
                                             <option value="DISEÑO DE JARDIN">Diseño de Jardines</option>
                                             <option value="PAISAJISMO">Paisajismo</option>
@@ -137,7 +138,7 @@
                                     <!-- EQUIPOS A TERRENO -->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Seleccione Equipo a Terreno</h5>
-                                        <Select class="form-control" name="cboEquipo" id="cboEquipo">
+                                        <Select class="form-control" name="cboEquipo" id="cboEquipo" required>
                                             <option value="">Seleccionar</option>
                                             <c:forEach var="equi" items="${equipo}">
                                                 <option>${equi.getNombre_Equipo()}</option>

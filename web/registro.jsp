@@ -83,7 +83,7 @@
             <br>
 
             <!-- FORMULARIO REGISTRO -->
-            <form method="POST" action="registroUsuario" autocomplete="off">
+            <form id="registro" method="POST" action="registroUsuario" autocomplete="off">
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
@@ -95,7 +95,9 @@
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Ingrese su Nombre:</h5>
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtNombre" id="txtNombre" placeholder="Ingrese su Nombre">
+                                                   name="txtNombre" id="txtNombre" placeholder="Ingrese su Nombre" 
+                                                   
+                                                   required>
                                         </div>
 
 
@@ -105,7 +107,8 @@
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Ingrese su Apellido:</h5>
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtApellido" id="txtApellido" placeholder="Ingrese su Apellido">
+                                                   name="txtApellido" id="txtApellido" placeholder="Ingrese su Apellido"
+                                                   title="Porfavor, no puede ingresar valores que no sean Letras" pattern="[A-Za-z]+" required>
                                         </div>
 
                                         <!-- NUMERO DE CONTACTO -->
@@ -123,7 +126,8 @@
                                             <div class="col-md-8">
                                                 <input class="form-control" style="text-align: center" type="text"
                                                        name="txtNumero" id="txtNumero"
-                                                       placeholder="Ingrese Numero de Contacto">
+                                                       placeholder="Ingrese Numero de Contacto" 
+                                                       title="Porfavor, no puede ingresar valores que no sean Numericos" pattern="[0-9]+" required>
                                             </div>
                                         </div>
 
@@ -131,21 +135,24 @@
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Ingrese su Correo:</h5>
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtCorreo" id="txtCorreo" placeholder="Ingrese su Correo">
+                                                   name="txtCorreo" id="txtCorreo" placeholder="Ingrese su Correo" 
+                                                   title="Formato del Correo no Valido"pattern="[a-zA-Z0-9._-]+[@][a-zA-Z]+[.]+[a-zA-Z]+" required>
                                         </div>
 
                                         <!-- RUT -->
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Ingrese su Rut:</h5>
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtRut" id="txtRut" placeholder="Ingrese su Rut (11111111-1)">
+                                                   name="txtRut" id="txtRut" placeholder="Ingrese su Rut (11111111-1)" 
+                                                   title="Rut no valido, Ingrese rut con el siguiente Formato : 11111111-1" pattern="[0-9]+[-]+[0-9K-k]" required>
                                         </div>
 
                                         <!-- CONTRASEÑA -->
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Asigne una Contraseña:</h5>
                                             <input class="form-control" style="text-align: center" type="password"
-                                                   name="txtPass" id="txtPass" placeholder="Ingrese Contraseña">
+                                                   name="txtPass" id="txtPass" placeholder="Ingrese Contraseña"
+                                                   title="Contraseña no valida" pattern="[0-9a-zA-Z]+" required>
                                         </div>
 
                                         <br>
@@ -154,7 +161,6 @@
                                         <div class="box-register">
                                             <input class="btn btn-skin" type="submit" value="Registrarse">
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

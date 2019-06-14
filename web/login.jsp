@@ -89,14 +89,16 @@
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Ingrese su Rut:</h5>
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtRut" placeholder="Ingrese su Rut (11111111-1)">
+                                                   name="txtRut" placeholder="Ingrese su Rut (11111111-1)"
+                                                   title="Rut no valido, Ingrese rut con el siguiente Formato : 11111111-1" pattern="[0-9]+[-]+[0-9K-k]" required>
                                         </div>
 
                                         <!-- CONTRASEÑA -->
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Ingrese su Contraseña:</h5>
                                             <input class="form-control" style="text-align: center" type="password"
-                                                   name="txtPass" placeholder="Ingrese su Contraseña">
+                                                   name="txtPass" placeholder="Ingrese su Contraseña"
+                                                   title="Contraseña no valida" pattern="[0-9a-zA-Z]+" required>
                                         </div>
 
                                         <!-- BOTON -->
