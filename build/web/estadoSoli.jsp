@@ -24,6 +24,30 @@
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.min.css">
 
+        <!-- JS VALIDACIONES -->
+        <script src="static/js/jquery.min.js" type="text/javascript"></script>
+        <script src="static/js/jquery.validate.min.js" type="text/javascript"></script>
+
+        <!-- VALIDACIONES -->
+        <script type="text/javascript">
+            $(function () {
+                $("#btnSeleccionar").on("click", function () {
+                    $("#estado").validate({
+                        rules: {
+                            cboProyecto: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            cboProyecto: {
+                                required: 'Campo Obligatorio'
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
         <!--ETIQUETA-->
         <title>Estado de Proyecto - Cliente</title>
 
@@ -96,7 +120,7 @@
             <br>
 
             <!-- INFORMACION SOBRE EL ESTADO DEL PROYECTO -->
-            <form action="estadoSolicitud" method="POST">
+            <form method="POST" action="estadoSolicitud" id="estado" autocomplete="off">
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
@@ -110,7 +134,7 @@
                                             <h5>Mis Proyectos</h5>
                                             <hr>
                                             <br>
-                                            <select class="form-control" name="cboProyecto" id="cboProyecto" required>
+                                            <select class="form-control" name="cboProyecto" id="cboProyecto">
                                                 <option value="">Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
                                                     <option>${pro.getNombre_Proyecto()}</option>
@@ -119,11 +143,11 @@
                                         </div>
                                         <!-- BOTON SELECCIONAR-->
                                         <div class="service-desc form-group">
-                                            <input class="btn btn-skin" type="submit" name="btnAccion" value="Seleccionar">
+                                            <input class="btn btn-skin" type="submit" name="btnAccion" id="btnSeleccionar" value="Seleccionar">
                                         </div>
 
                                     </div>
-                                    
+
                                     <!-- NOMBRE PROYECTO-->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Nombre Proyecto</h5>
@@ -182,7 +206,6 @@
     </center>
 
     <!-- COMPLEMENTOS JS -->
-    <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/jquery.sticky.js"></script>
     <script src="static/js/jquery.easing.min.js"></script>
@@ -192,7 +215,6 @@
     <script src="static/js/nivo-lightbox.min.js"></script>
     <script src="static/js/custom.js"></script>
     <script src="static/js/css3-animate-it.js"></script>
-    <script src="static/otros/contactform/contactform.js  "></script>
 </body>
 
 </html>

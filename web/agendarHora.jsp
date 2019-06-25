@@ -24,6 +24,42 @@
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.min.css">
 
+        <!-- JS VALIDACIONES -->
+        <script src="static/js/jquery.min.js" type="text/javascript"></script>
+        <script src="static/js/jquery.validate.min.js" type="text/javascript"></script>
+
+        <!-- VALIDACIONES -->
+        <script type="text/javascript">
+            $(function () {
+                $("#btnAgendar").on("click", function () {
+                    $("#solicitud").validate({
+                        rules: {
+                            cboProyecto: {
+                                required: true
+                            },
+                            txtFecha: {
+                                required: true
+                            },
+                            txtHora: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            cboProyecto: {
+                                required: 'Campo Obligatorio'
+                            },
+                            txtFecha: {
+                                required: 'Campo Obligatorio'
+                            },
+                            txtHora: {
+                                required: 'Campo Obligatorio'
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
         <!-- ETIQUETA -->
         <title>Agendar Hora - Cliente</title>
 
@@ -107,7 +143,7 @@
             <br>
 
             <!-- FORMULARIO AGENDAR -->
-            <form method="POST" action="solicitudAgendar" autocomplete="off">
+            <form method="POST" action="solicitudAgendar" id="solicitud" autocomplete="off">
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
@@ -119,7 +155,7 @@
                                         <!-- SELECCIONAR PROYECTO -->
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Mis Proyectos</h5>
-                                            <select class="form-control" name="cboProyecto" id="cboProyecto" required>
+                                            <select class="form-control" name="cboProyecto" id="cboProyecto">
                                                 <option value="">Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
                                                     <option>${pro.getNombre_Proyecto()}</option>
@@ -131,31 +167,26 @@
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Fecha a Terreno</h5>
                                             <input class="form-control" style="text-align: center" type="date"
-                                                   name="txtFecha" id="txtFecha" required>
+                                                   name="txtFecha" id="txtFecha">
                                         </div>
 
                                         <!-- HORA A TERRENO -->
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Hora a Terreno</h5>
                                             <input class="form-control" style="text-align: center" type="time"
-                                                   name="txtHora" id="txtHora" required>
+                                                   name="txtHora" id="txtHora">
                                         </div>
 
 
                                         <!--BOTON INFORMACIÓN SOBRE EQUIPO-->
                                         <div class="box-register">
                                             <!-- BOTON AGENDAR -->
-                                            <input class="btn btn-skin" type="submit" value="Agendar Hora">
+                                            <input class="btn btn-skin" type="submit" id="btnAgendar" value="Agendar Hora">
                                             <!-- BOTON VOLVER -->
                                             <a class="btn btn-skin" href="solicitudPro.jsp">Volver</a>
                                         </div>
-
-
                                     </div> 
                                     <br>
-
-
-
 
                                 </div>
                             </div>
@@ -167,7 +198,6 @@
     </center>
 
     <!-- COMPLEMENTOS JS -->
-    <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/jquery.sticky.js"></script>
     <script src="static/js/jquery.easing.min.js"></script>
@@ -177,7 +207,6 @@
     <script src="static/js/nivo-lightbox.min.js"></script>
     <script src="static/js/custom.js"></script>
     <script src="static/js/css3-animate-it.js"></script>
-    <script src="static/otros/contactform/contactform.js  "></script>
 </body>
 
 </html>

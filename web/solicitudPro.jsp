@@ -24,6 +24,42 @@
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.min.css">
 
+        <!-- JS VALIDACIONES -->
+        <script src="static/js/jquery.min.js" type="text/javascript"></script>
+        <script src="static/js/jquery.validate.js" type="text/javascript"></script>
+
+        <!-- VALIDACIONES -->
+        <script type="text/javascript">
+            $(function () {
+                $("#btnSolicitud").on("click", function () {
+                    $("#solicitud").validate({
+                        rules: {
+                            txtNombre: {
+                                required: true
+                            },
+                            cboServicio: {
+                                required: true
+                            },
+                            cboEquipo: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            txtNombre: {
+                                required: 'Campo Obligatorio'
+                            },
+                            cboServicio: {
+                                required: 'Campo Obligatorio'
+                            },
+                            cboEquipo: {
+                                required: 'Campo Obligatorio'
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
         <!-- ETIQUETA -->
         <title>Crear Proyecto - Cliente</title>
 
@@ -108,7 +144,7 @@
             <br>
 
             <!-- FORMULARIO -->
-            <form method="POST" action="solicitudProyecto" autocomplete="off">
+            <form method="POST" id="solicitud" action="solicitudProyecto" autocomplete="off">
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
@@ -118,14 +154,13 @@
                                     <!-- NOMBRE PROYECTO NUEVO -->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Nombre Proyecto:</h5>
-                                        <input class="form-control" style="text-align: center" type="text" name="txtNombre" 
-                                               title="Solo Puedes Ingresar Letras" pattern="[a-zA-Z]+" required>
+                                        <input class="form-control" style="text-align: center" type="text" name="txtNombre">
                                     </div>
 
                                     <!-- SERVICIO A CONTRATAR -->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Servicio a Contratar:</h5>
-                                        <select class="form-control" name="cboServicio" id="cboServicio" required>
+                                        <select class="form-control" name="cboServicio" id="cboServicio">
                                             <option value="">Seleccionar</option>
                                             <option value="DISEÑO DE JARDIN">Diseño de Jardines</option>
                                             <option value="PAISAJISMO">Paisajismo</option>
@@ -138,7 +173,7 @@
                                     <!-- EQUIPOS A TERRENO -->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Seleccione Equipo a Terreno</h5>
-                                        <Select class="form-control" name="cboEquipo" id="cboEquipo" required>
+                                        <Select class="form-control" name="cboEquipo" id="cboEquipo">
                                             <option value="">Seleccionar</option>
                                             <c:forEach var="equi" items="${equipo}">
                                                 <option>${equi.getNombre_Equipo()}</option>
@@ -148,7 +183,7 @@
 
                                     <!-- BOTON -->
                                     <div class="box-register">
-                                        <input class="btn btn-skin" type="submit" value="Enviar Solicitud">
+                                        <input class="btn btn-skin" type="submit" id="btnSolicitud" value="Enviar Solicitud">
                                     </div>
 
                                     <!-- BOTON AGENDAR HORA -->
@@ -167,7 +202,6 @@
 
 
     <!-- COMPLEMENTOS JS -->
-    <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/jquery.sticky.js"></script>
     <script src="static/js/jquery.easing.min.js"></script>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="JS/jquery-3.2.0.min.js" type="text/javascript"></script>
+        <script src="JS/jquery.validate.min.js" type="text/javascript"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <script>
+            $(function () {
+                $("#btnEnviar").on("click", function () {
+                    $("#formulario").validate({
+                        rules: {
+                            txtNombre: {
+                                required: true,
+                                minlength: 5,
+                                maxlength: 30
+                            },
+                            txtApellido: {
+                                required: true,
+                                minlength: 4,
+                                maxlength: 30
+                            },
+                            txtPassword: {
+                                required: true
+                            },
+                            txtEdad: {
+                                required: true,
+                                digits: true
+                            },
+                            txtEmail: {
+                                required: true,
+                                email: true,
+                                minlength: 8,
+                                maxlength: 80
+                            },
+                        },
+                        messages: {
+                            txtNombre: {
+                                required: 'Este campo es requerido',
+                                minlength: 'debe tener al menos 5 caracteres',
+                                maxlength: 'no puede pasar de 30 caracteres'
+                            },
+                            txtApellido: {
+                                required: 'Este campo es requerido',
+                                minlength: 'debe tener al menos 4 caracteres',
+                                maxlength: 'no puede pasar de 30 caracteres'
+                            },
+                            txtPassword: {
+                                required: 'Este campo es requerido'
+                            },
+                            txtEdad: {
+                                required: 'Este campo es requerido',
+                                digits: 'no puede ingresar letras, solo numeros'
+                            },
+                            txtEmail: {
+                                required: 'Este campo es requerido',
+                                email: 'debe respetar el tipo email',
+                                minlength: 'debe tener al menos 8 caracteres',
+                                maxlength: 'debe tener maximo 80 caracteres'
+                            },
+                        }
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>Formulario de Registro</h1>
+        </div>
+        <div class="container">
+            <div class="row">
+                <form method="POST" id="formulario" action="registroUsuario" autocomplete="off">
+                    <div class="text-center form-group">
+                        <div class="container">
+                            <div class="row animatedParent">
+                                <div class="row">
+                                    <div class="animated  animated bounceInUp">
+                                        <div class="box-register form-row">
+
+                                            <!-- NOMBRE -->
+                                            <div class="service-desc form-group col-md-6">
+                                                <h5>Ingrese su Nombre:</h5>
+                                                <input class="form-control" style="text-align: center" type="text"
+                                                       name="txtNombre" id="txtNombre" placeholder="Ingrese su Nombre">
+                                            </div>
+
+                                            <!-- APELLIDO -->
+                                            <div class="service-desc form-group col-md-6">
+                                                <h5>Ingrese su Apellido:</h5>
+                                                <input class="form-control" style="text-align: center" type="text"
+                                                       name="txtApellido" id="txtApellido" placeholder="Ingrese su Apellido">
+                                            </div>
+
+                                            <!-- NUMERO DE CONTACTO -->
+                                            <div class="service-desc form-group col-md-6">
+                                                <h5>Ingrese Numero Contacto</h5>
+
+                                                <!-- CODIGO -->
+                                                <div class="col-md-3">
+                                                    <input class="form-control" style="text-align: center" type="text"
+                                                           name="txtCodigo" id="txtCodigo" value="+56" readonly="readonly">
+                                                </div>
+
+
+                                                <!--NUMERO -->
+                                                <div class="col-md-8">
+                                                    <input class="form-control" style="text-align: center" type="text"
+                                                           name="txtNumero" id="txtNumero"
+                                                           placeholder="Ingrese Numero de Contacto">
+                                                </div>
+                                            </div>
+
+                                            <!-- CORREO ELECTRONICO -->
+                                            <div class="service-desc form-group col-md-6">
+                                                <h5>Ingrese su Correo:</h5>
+                                                <input class="form-control" style="text-align: center" type="text"
+                                                       name="txtCorreo" id="txtCorreo" placeholder="Ingrese su Correo">
+                                            </div>
+
+                                            <!-- RUT -->
+                                            <div class="service-desc form-group col-md-6">
+                                                <h5>Ingrese su Rut:</h5>
+                                                <input class="form-control" style="text-align: center" type="text"
+                                                       name="txtRut" id="txtRut" placeholder="Ingrese su Rut (11111111-1)">
+                                            </div>
+
+                                            <!-- CONTRASEÑA -->
+                                            <div class="service-desc form-group col-md-6">
+                                                <h5>Asigne una Contraseña:</h5>
+                                                <input class="form-control" style="text-align: center" type="password"
+                                                       name="txtPass" id="txtPass" placeholder="Ingrese Contraseña">
+                                            </div>
+                                            <br>
+
+                                            <!-- BOTON -->
+                                            <div class="box-register">
+                                                <button class="btn btn-skin" type="submit" id="btnEnviar">Registrarse</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- COMPLEMENTOS JS -->
+        <script src="static/js/bootstrap.min.js"></script>
+        <script src="static/js/jquery.sticky.js"></script>
+        <script src="static/js/jquery.easing.min.js"></script>
+        <script src="static/js/jquery.scrollTo.js"></script>
+        <script src="static/js/jquery.appear.js"></script>
+        <script src="static/js/stellar.js"></script>
+        <script src="static/js/nivo-lightbox.min.js"></script>
+        <script src="static/js/custom.js"></script>
+        <script src="static/js/css3-animate-it.js"></script>
+        <script src="static/otros/contactform/contactform.js  "></script>
+    </body>
+</html>

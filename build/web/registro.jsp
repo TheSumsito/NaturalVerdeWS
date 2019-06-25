@@ -24,9 +24,70 @@
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.min.css">
 
+        <!-- JS VALIDACIONES -->
+        <script src="static/js/jquery.min.js" type="text/javascript"></script>
+        <script src="static/js/jquery.validate.min.js" type="text/javascript"></script>
+
+        <!-- VALIDACIONES -->
+        <script type="text/javascript">
+            $(function () {
+                $("#btnRegistro").on("click", function () {
+                    $("#registro").validate({
+                        rules: {
+                            txtNombre: {
+                                required: true,
+                            },
+                            txtApellido: {
+                                required: true
+                            },
+                            txtNumero: {
+                                required: true,
+                                number: true,
+                                maxlength: 9,
+                                minlength: 8
+                            },
+                            txtCorreo: {
+                                required: true,
+                                email: true
+                            },
+                            txtRut: {
+                                required: true
+                            },
+                            txtPass: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            txtNombre: {
+                                required: 'Porfavor Rellene este Campo'
+                            },
+                            txtApellido: {
+                                required: 'Porfavor Rellene este Campo'
+                            },
+                            txtNumero: {
+                                required: 'Porfavor Rellene este Campo',
+                                number: 'Formato de Numero Telefonico Invalido',
+                                maxlength: 'Numero demasiado Largo',
+                                minlength: 'Numero demasiado Corto'
+                            },
+                            txtCorreo: {
+                                required: 'Porfavor Rellene este Campo',
+                                email: 'Formato de Correo Invalido'
+                            },
+                            txtRut: {
+                                required: 'Porfavor Rellene este Campo'
+                            },
+                            txtPass: {
+                                required: 'Porfavor Rellene este Campo'
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
         <!-- ETIQUETA -->
         <title>Registro</title>
-
     </head>
 
     <body>
@@ -87,80 +148,67 @@
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
-                            <div class="row">
-                                <div class="animated  animated bounceInUp">
-                                    <div class="box-register form-row">
+                            <div class="animated bounceInUp">
+                                <div class="box-register form-row">
 
-                                        <!-- NOMBRE -->
-                                        <div class="service-desc form-group col-md-6">
-                                            <h5>Ingrese su Nombre:</h5>
+                                    <!-- NOMBRE -->
+                                    <div class="service-desc form-group col-md-6">
+                                        <h5>Ingrese su Nombre:</h5>
+                                        <input class="form-control" style="text-align: center" type="text"
+                                               name="txtNombre" id="txtNombre" placeholder="Ingrese su Nombre">
+                                    </div>
+
+                                    <!-- APELLIDO -->
+                                    <div class="service-desc form-group col-md-6">
+                                        <h5>Ingrese su Apellido:</h5>
+                                        <input class="form-control" style="text-align: center" type="text"
+                                               name="txtApellido" id="txtApellido" placeholder="Ingrese su Apellido">
+                                    </div>
+
+                                    <!-- NUMERO DE CONTACTO -->
+                                    <div class="service-desc form-group col-md-6">
+                                        <h5>Ingrese Numero Contacto</h5>
+
+                                        <!-- CODIGO -->
+                                        <div class="col-md-2">
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtNombre" id="txtNombre" placeholder="Ingrese su Nombre" 
-                                                   
-                                                   required>
+                                                   name="txtCodigo" id="txtCodigo" value="+56" readonly="readonly">
                                         </div>
 
 
-
-
-                                        <!-- APELLIDO -->
-                                        <div class="service-desc form-group col-md-6">
-                                            <h5>Ingrese su Apellido:</h5>
+                                        <!--NUMERO -->
+                                        <div class="col-md-9">
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtApellido" id="txtApellido" placeholder="Ingrese su Apellido"
-                                                   title="Porfavor, no puede ingresar valores que no sean Letras" pattern="[A-Za-z]+" required>
+                                                   name="txtNumero" id="txtNumero" placeholder="Ingrese Numero de Contacto">
                                         </div>
+                                    </div>
 
-                                        <!-- NUMERO DE CONTACTO -->
-                                        <div class="service-desc form-group col-md-6">
-                                            <h5>Ingrese Numero Contacto</h5>
+                                    <!-- CORREO ELECTRONICO -->
+                                    <div class="service-desc form-group col-md-6">
+                                        <h5>Ingrese su Correo:</h5>
+                                        <input class="form-control" style="text-align: center" type="text"
+                                               name="txtCorreo" id="txtCorreo" placeholder="Ingrese su Correo">
+                                    </div>
 
-                                            <!-- CODIGO -->
-                                            <div class="col-md-3">
-                                                <input class="form-control" style="text-align: center" type="text"
-                                                       name="txtCodigo" id="txtCodigo" value="+56" readonly="readonly">
-                                            </div>
+                                    <!-- RUT -->
+                                    <div class="service-desc form-group col-md-6">
+                                        <h5>Ingrese su Rut:</h5>
+                                        <input class="form-control" style="text-align: center" type="text"
+                                               name="txtRut" id="txtRut" placeholder="Ingrese su Rut (11111111-1)">
+                                    </div>
 
+                                    <!-- CONTRASEÑA -->
+                                    <div class="service-desc form-group col-md-6">
+                                        <h5>Asigne una Contraseña:</h5>
+                                        <input class="form-control" style="text-align: center" type="password"
+                                               name="txtPass" id="txtPass" placeholder="Ingrese Contraseña">
+                                    </div>
 
-                                            <!--NUMERO -->
-                                            <div class="col-md-8">
-                                                <input class="form-control" style="text-align: center" type="text"
-                                                       name="txtNumero" id="txtNumero"
-                                                       placeholder="Ingrese Numero de Contacto" 
-                                                       title="Porfavor, no puede ingresar valores que no sean Numericos" pattern="[0-9]+" required>
-                                            </div>
-                                        </div>
+                                    <br>
 
-                                        <!-- CORREO ELECTRONICO -->
-                                        <div class="service-desc form-group col-md-6">
-                                            <h5>Ingrese su Correo:</h5>
-                                            <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtCorreo" id="txtCorreo" placeholder="Ingrese su Correo" 
-                                                   title="Formato del Correo no Valido"pattern="[a-zA-Z0-9._-]+[@][a-zA-Z]+[.]+[a-zA-Z]+" required>
-                                        </div>
-
-                                        <!-- RUT -->
-                                        <div class="service-desc form-group col-md-6">
-                                            <h5>Ingrese su Rut:</h5>
-                                            <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtRut" id="txtRut" placeholder="Ingrese su Rut (11111111-1)" 
-                                                   title="Rut no valido, Ingrese rut con el siguiente Formato : 11111111-1" pattern="[0-9]+[-]+[0-9K-k]" required>
-                                        </div>
-
-                                        <!-- CONTRASEÑA -->
-                                        <div class="service-desc form-group col-md-6">
-                                            <h5>Asigne una Contraseña:</h5>
-                                            <input class="form-control" style="text-align: center" type="password"
-                                                   name="txtPass" id="txtPass" placeholder="Ingrese Contraseña"
-                                                   title="Contraseña no valida" pattern="[0-9a-zA-Z]+" required>
-                                        </div>
-
-                                        <br>
-
-                                        <!-- BOTON -->
-                                        <div class="box-register">
-                                            <input class="btn btn-skin" type="submit" value="Registrarse">
-                                        </div>
+                                    <!-- BOTON -->
+                                    <div class="box-register">
+                                        <input class="btn btn-skin" type="submit" id="btnRegistro" value="Registrarse">
                                     </div>
                                 </div>
                             </div>
@@ -169,13 +217,9 @@
                 </div>
             </form>
         </section>
-
     </center>
 
-
-
     <!-- COMPLEMENTOS JS -->
-    <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/jquery.sticky.js"></script>
     <script src="static/js/jquery.easing.min.js"></script>
@@ -185,7 +229,6 @@
     <script src="static/js/nivo-lightbox.min.js"></script>
     <script src="static/js/custom.js"></script>
     <script src="static/js/css3-animate-it.js"></script>
-    <script src="static/otros/contactform/contactform.js  "></script>
 </body>
 
 </html>

@@ -24,6 +24,40 @@
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.min.css">
 
+        <!-- JS VALIDACIONES -->
+        <script src="static/js/jquery.min.js" type="text/javascript"></script>
+        <script src="static/js/jquery.validate.min.js" type="text/javascript"></script>
+
+        <!-- VALIDACIONES -->
+        <script type="text/javascript">
+            $(function () {
+                $("#btnEntrar").on("click", function () {
+                    $("#login").validate({
+                        rules: {
+                            txtRut: {
+                                required: true
+                            },
+                            txtPass: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            txtRut: {
+                                required: 'Campo Obligatorio'
+                            },
+                            txtPass: {
+                                required: 'Campo Obligatorio'
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+
+
+
+
         <!-- ETIQUETA -->
         <title>Login</title>
 
@@ -77,7 +111,7 @@
             <br>
 
             <!-- FORMULARIO (SESION) -->
-            <form method="POST" action="loginUsuario" autocomplete="off">
+            <form method="POST" id="login" action="loginUsuario" autocomplete="off">
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
@@ -89,21 +123,19 @@
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Ingrese su Rut:</h5>
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtRut" placeholder="Ingrese su Rut (11111111-1)"
-                                                   title="Rut no valido, Ingrese rut con el siguiente Formato : 11111111-1" pattern="[0-9]+[-]+[0-9K-k]" required>
+                                                   name="txtRut" placeholder="Ingrese su Rut (11111111-1)">
                                         </div>
 
                                         <!-- CONTRASEÑA -->
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Ingrese su Contraseña:</h5>
                                             <input class="form-control" style="text-align: center" type="password"
-                                                   name="txtPass" placeholder="Ingrese su Contraseña"
-                                                   title="Contraseña no valida" pattern="[0-9a-zA-Z]+" required>
+                                                   name="txtPass" placeholder="Ingrese su Contraseña">
                                         </div>
 
                                         <!-- BOTON -->
                                         <div class="box-register">
-                                            <input class="btn btn-skin" type="submit" value="Entrar">
+                                            <input class="btn btn-skin" type="submit" id="btnEntrar" value="Entrar">
                                         </div>
 
                                     </div>
@@ -117,7 +149,6 @@
     </center>
 
     <!-- COMPLEMENTOS JS -->
-    <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/jquery.sticky.js"></script>
     <script src="static/js/jquery.easing.min.js"></script>
@@ -127,7 +158,6 @@
     <script src="static/js/nivo-lightbox.min.js"></script>
     <script src="static/js/custom.js"></script>
     <script src="static/js/css3-animate-it.js"></script>
-    <script src="static/otros/contactform/contactform.js  "></script>
 </body>
 
 </html>

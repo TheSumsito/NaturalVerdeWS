@@ -24,6 +24,31 @@
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.min.css">
 
+        <!-- JS VALIDACIONES -->
+        <script src="static/js/jquery.min.js" type="text/javascript"></script>
+        <script src="static/js/jquery.validate.min.js" type="text/javascript"></script>
+
+        <!-- VALIDACIONES -->
+        <script type="text/javascript">
+            $(function () {
+                $("#btnSeleccionar").on("click", function () {
+                    $("#historial").validate({
+                        rules: {
+                            cboProyecto: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            cboProyecto: {
+                                required: 'Campo Obligatorio'
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+
         <!--ETIQUETA-->
         <title>Historial - Cliente</title>
 
@@ -98,7 +123,7 @@
             <br>
 
             <!-- HISTORIAL -->
-            <form action="historialProyecto" method="POST">
+            <form id="historial" action="historialProyecto" method="POST">
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
@@ -111,13 +136,13 @@
                                             <h5>Nombre del Proyecto:</h5>
                                             <br>
                                             <select class="form-control" style=" width:50%" name="cboProyecto">
-                                                <option>Seleccionar</option>
+                                                <option value="">Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
                                                     <option value="${pro.getNombre_Proyecto()}">${pro.getNombre_Proyecto()}</option>
                                                 </c:forEach>
                                             </select>
                                             <br>
-                                            <input class="btn btn-skin" type="submit" value="Seleccionar">
+                                            <input class="btn btn-skin" type="submit" id="btnSeleccionar" value="Seleccionar">
                                             <hr>
                                         </div>
                                     </center>
@@ -183,7 +208,6 @@
     </center>
 
     <!-- COMPLEMENTOS JS -->
-    <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/jquery.sticky.js"></script>
     <script src="static/js/jquery.easing.min.js"></script>
@@ -193,7 +217,6 @@
     <script src="static/js/nivo-lightbox.min.js"></script>
     <script src="static/js/custom.js"></script>
     <script src="static/js/css3-animate-it.js"></script>
-    <script src="static/otros/contactform/contactform.js  "></script>
 </body>
 
 </html>

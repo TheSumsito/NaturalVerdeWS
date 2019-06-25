@@ -24,6 +24,45 @@
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="adicionales/font-awesome/css/font-awesome.min.css">
 
+        <!-- JS VALIDACIONES -->
+        <script src="static/js/jquery.min.js" type="text/javascript"></script>
+        <script src="static/js/jquery.validate.min.js" type="text/javascript"></script>
+
+        <!-- VALIDACIONES -->
+        <script type="text/javascript">
+            $(function () {
+                $("#btnSeleccionar").on("click", function () {
+                    $("#informacion").validate({
+                        rules: {
+                            cboProyecto: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            cboProyecto: {
+                                required: 'Campo Obligatorio'
+                            }
+                        }
+                    });
+                });
+                $("#btnMostrar").on("click", function () {
+                    $("#informacion").validate({
+                        rules: {
+                            txtEquipo: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            txtEquipo: {
+                                required: 'Campo Obligatorio'
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+
         <!--ETIQUETA-->
         <title>Información Equipo - Cliente</title>
 
@@ -97,7 +136,7 @@
 
 
             <!-- INFORMACION DE LOS EQUIPOS A TERRENO -->
-            <form action="informacionEquipo" method="POST">
+            <form id="informacion" action="informacionEquipo" method="POST">
                 <div class="text-center form-group">
                     <div class="container">
                         <div class="row animatedParent">
@@ -109,15 +148,14 @@
                                         <div class="service-desc">
                                             <h5>Nombre del Proyecto:</h5>
                                             <br>
-                                            <select class="form-control" style=" width:50%" name="cboProyecto"
-                                                    id="cboNombre">
-                                                <option>Seleccionar</option>
+                                            <select class="form-control" style=" width:50%" name="cboProyecto">
+                                                <option value="">Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
                                                     <option value="${pro.getNombre_Proyecto()}">${pro.getNombre_Proyecto()}</option>
                                                 </c:forEach>
                                             </select>
                                             <br>
-                                            <input class="btn btn-skin" type="submit" name="btnAccion" value="Seleccionar">
+                                            <input class="btn btn-skin" type="submit" name="btnAccion" id="btnSeleccionar" value="Seleccionar">
                                             <hr>
                                         </div>
                                     </center>
@@ -129,12 +167,14 @@
                                             <h5>Equipo a Terreno</h5>
                                             <c:if test="${equipo!=null}">
                                                 <input class="form-control" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly" value="${equipo}">
+                                                <br>
+                                                <input class="btn btn-skin" type="submit" name="btnAccion" id="btnMostrar" value="Mostrar">
                                             </c:if>
                                             <c:if test="${equipo==null}">
                                                 <input class="form-control" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly">
+                                                <br>
+                                                <input class="btn btn-skin" type="submit" name="btnAccion" id="btnMostrar" value="Mostrar" disabled>
                                             </c:if>
-                                            <br>
-                                            <input class="btn btn-skin" type="submit" name="btnAccion" value="Mostrar">
                                         </div>
                                     </div>
 
@@ -169,7 +209,6 @@
     </center>
 
     <!-- COMPLEMENTOS JS -->
-    <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/jquery.sticky.js"></script>
     <script src="static/js/jquery.easing.min.js"></script>
@@ -179,7 +218,6 @@
     <script src="static/js/nivo-lightbox.min.js"></script>
     <script src="static/js/custom.js"></script>
     <script src="static/js/css3-animate-it.js"></script>
-    <script src="static/otros/contactform/contactform.js  "></script>
 </body>
 
 </html>
