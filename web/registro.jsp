@@ -164,6 +164,7 @@
                                         <input class="form-control" style="text-align: center" type="text"
                                                name="txtApellido" id="txtApellido" placeholder="Ingrese su Apellido">
                                     </div>
+                                    <br>
 
                                     <!-- NUMERO DE CONTACTO -->
                                     <div class="service-desc form-group col-md-6">
@@ -189,6 +190,7 @@
                                         <input class="form-control" style="text-align: center" type="text"
                                                name="txtCorreo" id="txtCorreo" placeholder="Ingrese su Correo">
                                     </div>
+                                    <br>
 
                                     <!-- RUT -->
                                     <div class="service-desc form-group col-md-6">

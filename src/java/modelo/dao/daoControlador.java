@@ -1143,11 +1143,10 @@ public class daoControlador {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //OPERACIONES
     public List<Insumo> totalPagar(String nombre) throws SQLException {
-        List<Insumo> total = new ArrayList<Insumo>();
-
+        List<Insumo> insumo = null;
         try {
             this.conexion = new Conexion().obtenerConexion();
-            String totalPagar = "SELECT SUM(PRECIO) FROM INSUMO WHERE NOMBRE_PROYECTO='" + nombre + "'";
+            String totalPagar = "SELECT * FROM INSUMO WHERE NOMBRE_PROYECTO='" + nombre + "'";
             CallableStatement cstmt = this.conexion.prepareCall(totalPagar);
             cstmt.execute();
 
@@ -1156,15 +1155,16 @@ public class daoControlador {
             while (rs.next()) {
                 Insumo insu = new Insumo();
                 insu.setPrecio(rs.getInt("Precio"));
-
-                total.add(insu);
+                insu.setCantidad(rs.getInt("Cantidad"));
+                
+                insumo.add(insu);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             this.conexion.close();
         }
-        return total;
+        return insumo;
     }
 
 }

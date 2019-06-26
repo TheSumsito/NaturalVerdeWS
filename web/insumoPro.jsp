@@ -131,7 +131,7 @@
                                     <!-- NOMBRE DEL PROYECTO -->
                                     <center>
                                         <div class="service-desc">
-                                            <h5>Nombre del Proyecto:</h5>
+                                            <h5>Nombre del Proyecto: <span style="color: green">${nombre_proyecto}</span></h5>
                                             <br>
                                             <select class="form-control" style=" width:50%" name="cboProyecto">
                                                 <option value="">Seleccionar</option>
@@ -214,14 +214,25 @@
                                     </div>
                                     <div class="box-register container-fluid">
                                         <div class="service-desc form-group col-md">
+                                            <c:forEach var="precio" items="${insumo}"></c:forEach>
+                                            <c:set var="total" value="${insumo.stream().map(precio -> precio.getPrecio() * precio.getCantidad()).sum()}"></c:set>
+                                            <c:if test="${total==null}">
+                                                <h5>Valor Total: <span>$ ${0}</span></h5>
+                                            </c:if>
                                             <c:if test="${total!=null}">
                                                 <h5>Valor Total: <span>$ ${total}</span></h5>
                                             </c:if>
                                         </div>
+
                                         <!-- BOTONES -->
                                         <div class="services-desc col-md">
                                             <!-- BOTON PAGAR -->
-                                            <input class="btn btn-skin" type="submit" value="Pagar" disabled>
+                                            <c:if test="${total!=null}">
+                                                <input type="submit" class="btn btn-skin" name="btnAccion" value="Pagar">
+                                            </c:if>
+                                            <c:if test="${total==null}">
+                                                <a class="btn btn-skin" href="#" disabled>Pagar</a>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
