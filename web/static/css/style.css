@@ -1218,3 +1218,14 @@ section {
 .borde-texto{
 	text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
+
+.ftco-section-parallax {
+  position: relative; }
+  .ftco-section-parallax .parallax-img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    padding: 10em 0; }
+  .ftco-section-parallax .heading-section-white h2 {
+    font-weight: 400 !important; }

@@ -93,15 +93,10 @@ public class insumoProyecto extends HttpServlet {
         String RutCliente = (String) sesion.getAttribute("rut");
 
         try {
-            if (boton.equals("Seleccionar")) {
-                Insumo = dao.buscarInsumo(Nombre_Proyecto);
-                proyecto = dao.buscarProyecto(RutCliente);
-                total = dao.totalPagar(Nombre_Proyecto);
-                Nombre_Proyecto = request.getParameter("cboProyecto");
-            } else if (boton.equals("Pagar")) {
-                request.setAttribute("nombre_proyecto", Nombre_Proyecto);
-                request.getRequestDispatcher("estadoPago.jsp").forward(request, response);
-            }
+            Insumo = dao.buscarInsumo(Nombre_Proyecto);
+            proyecto = dao.buscarProyecto(RutCliente);
+            total = dao.totalPagar(Nombre_Proyecto);
+            Nombre_Proyecto = request.getParameter("cboProyecto");
 
         } catch (Exception e) {
             Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, e);
