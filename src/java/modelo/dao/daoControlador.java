@@ -1066,8 +1066,6 @@ public class daoControlador {
             this.conexion = new Conexion().obtenerConexion();
             String loginAdmin = "SELECT * FROM ADMINISTRADOR WHERE USUARIO='" + usuario + "' AND CONTRASENA ='" + contrasena + "'";
             CallableStatement cstmt = this.conexion.prepareCall(loginAdmin);
-            cstmt.setString(1, usuario);
-            cstmt.setString(2, contrasena);
 
             cstmt.execute();
 

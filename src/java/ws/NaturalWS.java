@@ -301,8 +301,10 @@ public class NaturalWS {
         daoControlador dao = new daoControlador();
         
         try {
-            dao.LoginAdmin(usuario, contrasena);
-            return true;
+            if(dao.LoginAdmin(usuario, contrasena)){
+                return true;
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
         }

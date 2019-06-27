@@ -228,7 +228,7 @@
                                         <div class="services-desc col-md">
                                             <!-- BOTON PAGAR -->
                                             <c:if test="${total!=null}">
-                                                <input type="submit" class="btn btn-skin" name="btnAccion" value="Pagar">
+                                                <input type="submit" class="btn btn-skin" name="btnAccion" id="btnPagar" value="Pagar">
                                             </c:if>
                                             <c:if test="${total==null}">
                                                 <a class="btn btn-skin" href="#" disabled>Pagar</a>

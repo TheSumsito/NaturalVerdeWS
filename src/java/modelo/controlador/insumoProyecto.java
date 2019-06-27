@@ -86,26 +86,23 @@ public class insumoProyecto extends HttpServlet {
         List<Proyecto> proyecto = null;
         List<Insumo> total = null;
         int valor = 0;
-        String boton = "";
+        String boton = request.getParameter("btnAccion");
         String Nombre_Proyecto = request.getParameter("cboProyecto");
-        
+
         HttpSession sesion = request.getSession();
         String RutCliente = (String) sesion.getAttribute("rut");
-        
+
         try {
-            Insumo = dao.buscarInsumo(Nombre_Proyecto);
-            proyecto = dao.buscarProyecto(RutCliente);
-            total = dao.totalPagar(Nombre_Proyecto);
-            Nombre_Proyecto = request.getParameter("cboProyecto");
-            
-            boton = request.getParameter("btnAccion");
-            
-            if(boton.equals("Pagar")){
-                request.getRequestDispatcher("pago/estadoPago.jsp").forward(request, response);
+            if (boton.equals("Seleccionar")) {
+                Insumo = dao.buscarInsumo(Nombre_Proyecto);
+                proyecto = dao.buscarProyecto(RutCliente);
+                total = dao.totalPagar(Nombre_Proyecto);
+                Nombre_Proyecto = request.getParameter("cboProyecto");
+            } else if (boton.equals("Pagar")) {
+                request.setAttribute("nombre_proyecto", Nombre_Proyecto);
+                request.getRequestDispatcher("estadoPago.jsp").forward(request, response);
             }
-            
-            
-            
+
         } catch (Exception e) {
             Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -114,6 +111,7 @@ public class insumoProyecto extends HttpServlet {
         request.setAttribute("total", total);
         request.setAttribute("valor", valor);
         request.setAttribute("nombre_proyecto", Nombre_Proyecto);
+        request.setAttribute("proyecto", proyecto);
         request.getRequestDispatcher("insumoPro.jsp").forward(request, response);
     }
 

@@ -31,8 +31,7 @@ public class estadoPago extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("pago/estadoPago.jsp").forward(request, response);
-        String nombresito = (String) request.getAttribute("Nombre_Proyecto");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

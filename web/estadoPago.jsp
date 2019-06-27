@@ -14,13 +14,6 @@
         <title>JSP Page</title>
     </head>
     <body
-        <c:if test="${nombre_proyecto!=null}">
-            <h1>lo toma</h1>
-        </c:if>
-        <c:if test="${nombre_proyecto==null}">
-            <h1>no lo toma</h1>
-        </c:if>
-        <c:out value="${nombre_proyecto}"></c:out>
-        <h1>${nombresito}</h1>
+        <h1>${nombre_proyecto}</h1>
     </body>
 </html>
