@@ -46,13 +46,13 @@
                         },
                         messages: {
                             cboProyecto: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Seleccione un Proyecto'
                             },
                             txtFecha: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Ingrese Fecha a Terreno'
                             },
                             txtHora: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Ingrese Hora a Terreno'
                             }
                         }
                     });

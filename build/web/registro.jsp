@@ -27,7 +27,7 @@
         <!-- JS VALIDACIONES -->
         <script src="static/js/jquery.min.js" type="text/javascript"></script>
         <script src="static/js/jquery.validate.min.js" type="text/javascript"></script>
-
+        <script src="static/js/validarRut.js" type="text/javascript"></script>
         <!-- VALIDACIONES -->
         <script type="text/javascript">
             $(function () {
@@ -51,39 +51,82 @@
                                 email: true
                             },
                             txtRut: {
-                                required: true
+                                required: true,
+                                minlength: 9,
+                                maxlength: 10
                             },
                             txtPass: {
                                 required: true
+                            },
+                            txtPass2: {
+                                required: true,
+                                equalTo: '#txtPass'
                             }
                         },
                         messages: {
                             txtNombre: {
-                                required: 'Porfavor Rellene este Campo'
+                                required: 'Porfavor Ingrese su Nombre'
                             },
                             txtApellido: {
-                                required: 'Porfavor Rellene este Campo'
+                                required: 'Porfavor Ingrese su Apellido'
                             },
                             txtNumero: {
-                                required: 'Porfavor Rellene este Campo',
+                                required: 'Porfavor Ingrese su Numero Telefonico',
                                 number: 'Formato de Numero Telefonico Invalido',
                                 maxlength: 'Numero demasiado Largo',
                                 minlength: 'Numero demasiado Corto'
                             },
                             txtCorreo: {
-                                required: 'Porfavor Rellene este Campo',
+                                required: 'Porfavor Ingrese su Correo',
                                 email: 'Formato de Correo Invalido'
                             },
                             txtRut: {
-                                required: 'Porfavor Rellene este Campo'
+                                required: 'Porfavor Ingrese su Rut'
                             },
                             txtPass: {
-                                required: 'Porfavor Rellene este Campo'
+                                required: 'Porfavor Ingrese una Contraseña'
+                            },
+                            txtPass2: {
+                                required: 'Porfavor Ingrese una Contraseña',
+                                equalTo: 'La contraseña no es igual'
                             }
                         }
                     });
                 });
             });
+
+            function numeros(e) {
+                tecla = (document.all) ? e.keyCode : e.which;
+                if (tecla == 8)
+                    return true;
+                else if (tecla == 0 || tecla == 9)
+                    return true;
+                patron = /[0-9\s]/;
+                te = String.fromCharCode(tecla);
+                return patron.test(te);
+            }
+
+            function letras(e) {
+                tecla = (document.all) ? e.keyCode : e.which;
+                if (tecla == 8)
+                    return true;
+                else if (tecla == 0 || tecla == 9)
+                    return true;
+                patron = /[a-zA-Z\s]/;
+                te = String.fromCharCode(tecla);
+                return patron.test(te);
+            }
+
+            function formatoRut(e) {
+                tecla = (document.all) ? e.keyCode : e.which;
+                if (tecla == 8)
+                    return true;
+                else if (tecla == 0 || tecla == 9)
+                    return true;
+                patron = /[0-9Kk\s]/;
+                te = String.fromCharCode(tecla);
+                return patron.test(te);
+            }
         </script>
 
         <!-- ETIQUETA -->
@@ -155,14 +198,14 @@
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Ingrese su Nombre:</h5>
                                         <input class="form-control" style="text-align: center" type="text"
-                                               name="txtNombre" id="txtNombre" placeholder="Ingrese su Nombre">
+                                               name="txtNombre" id="txtNombre" onkeypress="return letras(event)"  placeholder="Ingrese su Nombre">
                                     </div>
 
                                     <!-- APELLIDO -->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Ingrese su Apellido:</h5>
                                         <input class="form-control" style="text-align: center" type="text"
-                                               name="txtApellido" id="txtApellido" placeholder="Ingrese su Apellido">
+                                               name="txtApellido" id="txtApellido" onkeypress="return letras(event)" placeholder="Ingrese su Apellido">
                                     </div>
                                     <br>
 
@@ -180,7 +223,7 @@
                                         <!--NUMERO -->
                                         <div class="col-md-9">
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtNumero" id="txtNumero" placeholder="Ingrese Numero de Contacto">
+                                                   name="txtNumero" id="txtNumero" onkeypress="return numeros(event)" maxlength="9" placeholder="Ingrese Numero de Contacto">
                                         </div>
                                     </div>
 
@@ -193,17 +236,23 @@
                                     <br>
 
                                     <!-- RUT -->
-                                    <div class="service-desc form-group col-md-6">
+                                    <div class="service-desc form-group col-md-6">  
                                         <h5>Ingrese su Rut:</h5>
                                         <input class="form-control" style="text-align: center" type="text"
-                                               name="txtRut" id="txtRut" placeholder="Ingrese su Rut (11111111-1)">
+                                               name="txtRut" id="txtRut" oninput="checkRut(this)" onkeypress="return formatoRut(event)" maxlength="10" placeholder="Ingrese su Rut (11111111-1)">
                                     </div>
 
                                     <!-- CONTRASEÑA -->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Asigne una Contraseña:</h5>
-                                        <input class="form-control" style="text-align: center" type="password"
-                                               name="txtPass" id="txtPass" placeholder="Ingrese Contraseña">
+                                        <div class="col-md-6">
+                                            <input class="form-control" style="text-align: center" type="password"
+                                                   name="txtPass" id="txtPass" placeholder="Ingrese Contraseña">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" style="text-align: center" type="password"
+                                                   name="txtPass2" id="txtPass2" placeholder="Vuelva a Ingresar su Contraseña">
+                                        </div>
                                     </div>
 
                                     <br>

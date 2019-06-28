@@ -40,7 +40,7 @@
                         },
                         messages: {
                             cboProyecto: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Seleccione un Proyecto'
                             }
                         }
                     });
@@ -54,7 +54,7 @@
                         },
                         messages: {
                             txtEquipo: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Ingrese Equipo a Terreno'
                             }
                         }
                     });
@@ -166,12 +166,12 @@
                                         <div class="service-desc form-group col-md">
                                             <h5>Equipo a Terreno</h5>
                                             <c:if test="${equipo!=null}">
-                                                <input class="form-control" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly" value="${equipo}">
+                                                <input class="form-control" style="text-align: center" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly" value="${equipo}">
                                                 <br>
                                                 <input class="btn btn-skin" type="submit" name="btnAccion" id="btnMostrar" value="Mostrar">
                                             </c:if>
                                             <c:if test="${equipo==null}">
-                                                <input class="form-control" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly">
+                                                <input class="form-control" style="text-align: center" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly">
                                                 <br>
                                                 <input class="btn btn-skin" type="submit" name="btnAccion" id="btnMostrar" value="Mostrar" disabled>
                                             </c:if>

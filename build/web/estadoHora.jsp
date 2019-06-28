@@ -39,7 +39,7 @@
                         },
                         messages: {
                             cboProyecto: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Seleccione un Proyecto'
                             }
                         }
                     });
@@ -53,7 +53,7 @@
                         },
                         messages: {
                             cboFecha: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Seleccione una Fecha'
                             }
                         }
                     });
@@ -227,12 +227,12 @@
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Estado</h5>
                                         <c:if test="${estado!=null}">
-                                            <input class="form-control" style="text-align: center" type="text"
+                                            <input class="form-control" style="text-align: center; color: green" type="text"
                                                    name="txtEstado" id="txtEstado" readonly="true" value="${estado}">
                                         </c:if>
                                         <c:if test="${estado==null}">
-                                            <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtEstado" id="txtEstado" readonly="true" value="${estado}">
+                                            <input class="form-control" style="text-align: center; color: green" type="text"
+                                                   name="txtEstado" id="txtEstado" readonly="true">
                                         </c:if>
                                     </div>
                                 </div>

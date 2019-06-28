@@ -27,6 +27,7 @@
         <!-- JS VALIDACIONES -->
         <script src="static/js/jquery.min.js" type="text/javascript"></script>
         <script src="static/js/jquery.validate.min.js" type="text/javascript"></script>
+        <script src="static/js/validarRut.js" type="text/javascript"></script>
 
         <!-- VALIDACIONES -->
         <script type="text/javascript">
@@ -43,21 +44,27 @@
                         },
                         messages: {
                             txtRut: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor Ingrese su Rut'
                             },
                             txtPass: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor Ingrese su Contraseña'
                             }
                         }
                     });
                 });
             });
+            function formatoRut(e) {
+                tecla = (document.all) ? e.keyCode : e.which;
+                if (tecla == 8)
+                    return true;
+                else if (tecla == 0 || tecla == 9)
+                    return true;
+                patron = /[0-9Kk\s]/;
+                te = String.fromCharCode(tecla);
+                return patron.test(te);
+            }
         </script>
-
-
-
-
-
+        
         <!-- ETIQUETA -->
         <title>Login</title>
 
@@ -123,7 +130,7 @@
                                         <div class="service-desc form-group col-md-6">
                                             <h5>Ingrese su Rut:</h5>
                                             <input class="form-control" style="text-align: center" type="text"
-                                                   name="txtRut" placeholder="Ingrese su Rut (11111111-1)">
+                                                   name="txtRut" oninput="checkRut(this)" onkeypress="return formatoRut(event)" maxlength="10" placeholder="Ingrese su Rut (11111111-1)">
                                         </div>
 
                                         <!-- CONTRASEÑA -->

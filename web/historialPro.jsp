@@ -40,7 +40,7 @@
                         },
                         messages: {
                             cboProyecto: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Seleccione un Proyecto'
                             }
                         }
                     });

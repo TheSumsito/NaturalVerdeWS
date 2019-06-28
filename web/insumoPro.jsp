@@ -51,7 +51,7 @@
             $(function () {
                 $("#btnPagar").on("click", function () {
                     $("#Pago").validate({
-                        rules:{
+                        rules: {
                             cboBanco: {
                                 required: true
                             },
@@ -62,10 +62,11 @@
                                 required: true
                             },
                             txtCuotas: {
-                                required: true
+                                required: true,
+                                digits: true
                             }
                         },
-                        messages:{
+                        messages: {
                             cboBanco: {
                                 required: 'Porfavor, Seleccione un Banco'
                             },
@@ -76,13 +77,33 @@
                                 required: 'Porfavor, Ingrese su Numero de Cuenta'
                             },
                             txtCuotas: {
-                                required: 'Porfavor, Ingrese un Numero de Cuotas'
+                                required: 'Vacio',
+                                digits: 'Nulo'
                             }
                         }
-                        
                     });
                 });
             });
+            function letras(e) {
+                tecla = (document.all) ? e.keyCode : e.which;
+                if (tecla == 8)
+                    return true;
+                else if (tecla == 0 || tecla == 9)
+                    return true;
+                patron = /[a-zA-Z\s]/;
+                te = String.fromCharCode(tecla);
+                return patron.test(te);
+            }
+            function numeros(e) {
+                tecla = (document.all) ? e.keyCode : e.which;
+                if (tecla == 8)
+                    return true;
+                else if (tecla == 0 || tecla == 9)
+                    return true;
+                patron = /[0-9\s]/;
+                te = String.fromCharCode(tecla);
+                return patron.test(te);
+            }
         </script>
 
         <!--ETIQUETA-->
@@ -300,7 +321,7 @@
                             <div class="container">
                                 <h5>Nombre Proyecto</h5>
                                 <div class="col-md">
-                                    <input type="text" class="form-control" style="text-align: center" readonly="true" name="txtNombre" value="${nombre_proyecto}">                               
+                                    <input type="text" class="form-control" style="text-align: center; color: green" readonly="true" name="txtNombre" value="${nombre_proyecto}">                               
                                 </div>
                                 <br>
                                 <div class="form-group col-md-6">
@@ -328,21 +349,23 @@
                                 <div class="form-group col-md-6">
                                     <h5>Ingrese Numero de Cuenta</h5>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" style="text-align: center" name="txtCuenta">
+                                        <input type="text" class="form-control" style="text-align: center" onkeypress="return numeros(event)" maxlength="15"  name="txtCuenta">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="col-md-2">
                                         <h5>Cuotas</h5>
-                                        <input type="text" class="form-control" style="text-align: center" name="txtCuotas">
+                                        <input type="text" class="form-control" style="text-align: center" onkeypress="return numeros(event)" maxlength="2"  name="txtCuotas">
                                     </div>
                                     <div class="col-md-10">
                                         <h5>Valor Total :</h5>
                                         <input type="text" class="form-control" style="text-align: center" name="txtTotal" value="${total}" readonly="true">
                                     </div>
-                                </div>
+                                </div
+                                <br>
 
                                 <div class="form-group col-md">
+                                    <br>
                                     <div class="col-md">
                                         <input type="submit" class="btn btn-skin" name="btnAccion" id="btnPagar" value="Pagar">
                                     </div>

@@ -46,18 +46,28 @@
                         },
                         messages: {
                             txtNombre: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor Asigne un Nombre a su Proyecto'
                             },
                             cboServicio: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Seleccione algun Servicio a Contratar'
                             },
                             cboEquipo: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Seleccione algun Equipo a Terreno'
                             }
                         }
                     });
                 });
             });
+            function letras(e) {
+                tecla = (document.all) ? e.keyCode : e.which;
+                if (tecla == 8)
+                    return true;
+                else if (tecla == 0 || tecla == 9)
+                    return true;
+                patron = /[a-zA-Z\s]/;
+                te = String.fromCharCode(tecla);
+                return patron.test(te);
+            }
         </script>
 
         <!-- ETIQUETA -->
@@ -154,7 +164,7 @@
                                     <!-- NOMBRE PROYECTO NUEVO -->
                                     <div class="service-desc form-group col-md-6">
                                         <h5>Nombre Proyecto:</h5>
-                                        <input class="form-control" style="text-align: center" type="text" name="txtNombre">
+                                        <input class="form-control" style="text-align: center" onkeypress="return letras(event)" type="text" name="txtNombre">
                                     </div>
 
                                     <!-- SERVICIO A CONTRATAR -->
