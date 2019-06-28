@@ -5,6 +5,7 @@
  */
 package modelo.controlador;
 
+import Correo.enviarCorreo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import modelo.dao.daoControlador;
 import modelo.entidades.Banco;
 import modelo.entidades.Carrito;
+import modelo.entidades.Cliente;
 import modelo.entidades.Insumo;
 import modelo.entidades.Proyecto;
 import modelo.entidades.Tipo_Cuenta;
@@ -103,12 +105,36 @@ public class pagoInsumo extends HttpServlet {
         int Total = Integer.parseInt(request.getParameter("txtTotal"));
         String Nombre_Proyecto = request.getParameter("txtNombre");
         int valorCuota = (Total / numCuotas);
+
+        //LLAMAMOS AL ENVIO DE CORREO
+        enviarCorreo enviar = new enviarCorreo();
+
+        //VARIABLES DEL ENVIO DE CORREO
+        Cliente cliente = null;
+        String Correo = null;
+        String Asunto = "";
+        String mensaje = "Su Pago ahh sido realizado Correctamente \n"
+                + "Detalles de su Pago: \n"
+                + "Codigo Carrito: " + CodCarrito +"\n"
+                + "Numero de Cuenta: " + numCuenta + "\n"
+                + "Nombre del Banco: " + Nombre_Banco + "\n"
+                + "Tipo de Cuenta: " + Tipo_Cuenta + "\n"
+                + "Cuotas: " + numCuotas + "\n"
+                + "Valor Cuota: $" + valorCuota + "\n"
+                + "Total A Pagar: $" + Total + "\n";
         
+        
+
         Carrito carro = new Carrito(CodCarrito, Nombre_Proyecto, numCuenta, Nombre_Banco, Tipo_Cuenta, numCuotas, Total, valorCuota);
-        
+
         try {
             if (dao.IngresarCarrito(carro)) {
                 resultado = true;
+                cliente = dao.buscarCliente(RutCliente);
+                Asunto = "PAGO INSUMOS";
+                Correo = cliente.getCorreo();
+
+                enviar.SendMail(mensaje, Correo, Asunto);   
             } else {
                 resultado = false;
             }

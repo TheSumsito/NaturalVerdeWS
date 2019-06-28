@@ -30,6 +30,7 @@
 
         <!-- VALIDACIONES -->
         <script type="text/javascript">
+            //PROYECTO
             $(function () {
                 $("#btnSeleccionar").on("click", function () {
                     $("#insumo").validate({
@@ -40,9 +41,45 @@
                         },
                         messages: {
                             cboProyecto: {
-                                required: 'Campo Obligatorio'
+                                required: 'Porfavor, Selecccione un Proyecto'
                             }
                         }
+                    });
+                });
+            });
+
+            $(function () {
+                $("#btnPagar").on("click", function () {
+                    $("#Pago").validate({
+                        rules:{
+                            cboBanco: {
+                                required: true
+                            },
+                            cboTipo: {
+                                required: true
+                            },
+                            txtCuenta: {
+                                required: true
+                            },
+                            txtCuotas: {
+                                required: true
+                            }
+                        },
+                        messages:{
+                            cboBanco: {
+                                required: 'Porfavor, Seleccione un Banco'
+                            },
+                            cboTipo: {
+                                required: 'Porfavor, Seleccione un Tipo de Cuenta'
+                            },
+                            txtCuenta: {
+                                required: 'Porfavor, Ingrese su Numero de Cuenta'
+                            },
+                            txtCuotas: {
+                                required: 'Porfavor, Ingrese un Numero de Cuotas'
+                            }
+                        }
+                        
                     });
                 });
             });
@@ -114,7 +151,7 @@
                             <h2 class="h-bold" style="color: green">Insumos Necesarios</h2>
                             <div class="divider-header"></div>
                         </div>
-                        
+
                         <!-- MENSAJES DE ALERTA -->
                         <c:if test="${resultado==true}">
                             <div class="alert alert-success">Se ah realizado el Pago Correctamente</div>
@@ -254,7 +291,7 @@
                     </div>
                 </div>
             </form>
-            <form method="POST" action="pagoInsumo" autocomplete="off">
+            <form method="POST" action="pagoInsumo" id="Pago" autocomplete="off">
                 <div class="service-desc">
                     <div class="col-md-12 align-items-center form-group animatedParent">
                         <div class="tab-pane fade" id="v-pills-performance" role="tabpanel"
