@@ -234,60 +234,6 @@
                                                                 <a class="btn btn-skin" id="v-pills-performance-tab" data-toggle="pill" href="#v-pills-performance"
                                                                    role="tab" aria-controls="v-pills-performance" aria-selected="false">Ir al Carrito de Compras</a>
                                                             </c:if>
-                                                            <c:if test="${total==null}">
-                                                                <a class="btn btn-skin" id="v-pills-performance-tab" data-toggle="pill" href="#v-pills-performance"
-                                                                   role="tab" aria-controls="v-pills-performance" aria-selected="false" disabled>Ir al Carrito de Compras</a>
-                                                            </c:if>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 align-items-center form-group">
-                                                        <div class="tab-pane fade" id="v-pills-performance" role="tabpanel"
-                                                             aria-labelledby="v-pills-performance-tab">
-                                                            <hr>
-                                                            <div class="container">
-                                                                <h5>Nombre del Proyecto: <span style="color: green">${nombre_proyecto}</span></h5>
-                                                                <br>
-                                                                <div class="form-group col-md-6">
-                                                                    <h5>Seleccione Banco</h5>
-                                                                    <div class="col-md-12">
-                                                                        <select class="form-control">
-                                                                            <option></option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <h5>Seleccione Tipo de Cuenta</h5>
-                                                                    <div class="col-md-12">
-                                                                        <select class="form-control">
-                                                                            <option></option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <h5>Ingrese Numero de Cuenta</h5>
-                                                                    <div class="col-md-12">
-                                                                        <input type="text" class="form-control" style="text-align: center" name="txtNumero">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <div class="col-md-2">
-                                                                        <h5>Cuotas</h5>
-                                                                        <select class="form-control">
-                                                                            <option></option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-md-10">
-                                                                        <h5>Total a Cancelar :</h5>
-                                                                        <input type="text" class="form-control" style="text-align: center" name="txtTotal" value="$ ${total}" disabled>
-                                                                    </div>
-                                                                </div>
-                                                              
-                                                                <div class="form-group col-md">
-                                                                    <div class="col-md">
-                                                                        <input type="submit" class="btn btn-skin" name="btnAccion" id="btnPagar" value="Pagar">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -299,6 +245,68 @@
                         </div>
                     </div>
                 </div>
+            </form>
+            <form method="POST" action="pagoInsumo" autocomplete="off">
+                <div class="service-desc">
+                    <div class="col-md-12 align-items-center form-group animatedParent">
+                        <div class="tab-pane fade" id="v-pills-performance" role="tabpanel"
+                             aria-labelledby="v-pills-performance-tab">
+                            <hr>
+                            <div class="container">
+                                <h5>Nombre Proyecto</h5>
+                                <div class="col-md">
+                                    <input type="text" class="form-control" style="text-align: center" readonly="true" name="txtNombre" value="${nombre_proyecto}">                               
+                                </div>
+                                <br>
+                                <div class="form-group col-md-6">
+                                    <h5>Seleccione Banco</h5>
+                                    <div class="col-md-12">
+                                        <select class="form-control" name="cboBanco">
+                                            <option value="">Seleccionar</option>
+                                            <c:forEach var="banco" items="${banco}">
+                                                <option value="${banco.getNombre_Banco()}">${banco.getNombre_Banco()}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <h5>Seleccione Tipo de Cuenta</h5>
+                                    <div class="col-md-12">
+                                        <select class="form-control" name="cboTipo">
+                                            <option value="">Seleccionar</option>
+                                            <c:forEach var="tipo" items="${tipo}">
+                                                <option value="${tipo.getTipo_Cuenta()}">${tipo.getTipo_Cuenta()}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <h5>Ingrese Numero de Cuenta</h5>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" style="text-align: center" name="txtCuenta">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="col-md-2">
+                                        <h5>Cuotas</h5>
+                                        <input type="text" class="form-control" style="text-align: center" name="txtCuotas">
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h5>Valor Total :</h5>
+                                        <input type="text" class="form-control" style="text-align: center" name="txtTotal" value="$ ${total}" readonly="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md">
+                                    <div class="col-md">
+                                        <input type="submit" class="btn btn-skin" name="btnAccion" id="btnPagar" value="Pagar">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </form>
 
         </section>

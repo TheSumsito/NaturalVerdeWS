@@ -13,6 +13,7 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import modelo.dao.daoControlador;
+import modelo.entidades.Banco;
 import modelo.entidades.Equipo;
 import modelo.entidades.Historial;
 import modelo.entidades.Insumo;
@@ -348,6 +349,20 @@ public class NaturalWS {
         daoControlador dao = new daoControlador();
         try {
             return dao.detalleHistorial(fase);
+        } catch (SQLException ex) {
+            Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "listaBanco")
+    public List<Banco> listaBanco() {
+        daoControlador dao = new daoControlador();
+        try {
+            return dao.listarBanco();
         } catch (SQLException ex) {
             Logger.getLogger(NaturalWS.class.getName()).log(Level.SEVERE, null, ex);
         }

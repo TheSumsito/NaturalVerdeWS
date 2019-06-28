@@ -4,31 +4,41 @@
 <xsd:import namespace="http://ws/" schemaLocation="http://localhost:8080/Pago/PagoWS?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="vuelto">
-<part name="parameters" element="tns:vuelto"/>
-</message>
-<message name="vueltoResponse">
-<part name="parameters" element="tns:vueltoResponse"/>
-</message>
 <message name="hello">
 <part name="parameters" element="tns:hello"/>
 </message>
 <message name="helloResponse">
 <part name="parameters" element="tns:helloResponse"/>
 </message>
+<message name="IngresarCarrito">
+<part name="parameters" element="tns:IngresarCarrito"/>
+</message>
+<message name="IngresarCarritoResponse">
+<part name="parameters" element="tns:IngresarCarritoResponse"/>
+</message>
+<message name="listarBanco">
+<part name="parameters" element="tns:listarBanco"/>
+</message>
+<message name="listarBancoResponse">
+<part name="parameters" element="tns:listarBancoResponse"/>
+</message>
 <portType name="PagoWS">
-<operation name="vuelto">
-<input wsam:Action="http://ws/PagoWS/vueltoRequest" message="tns:vuelto"/>
-<output wsam:Action="http://ws/PagoWS/vueltoResponse" message="tns:vueltoResponse"/>
-</operation>
 <operation name="hello">
 <input wsam:Action="http://ws/PagoWS/helloRequest" message="tns:hello"/>
 <output wsam:Action="http://ws/PagoWS/helloResponse" message="tns:helloResponse"/>
 </operation>
+<operation name="IngresarCarrito">
+<input wsam:Action="http://ws/PagoWS/IngresarCarritoRequest" message="tns:IngresarCarrito"/>
+<output wsam:Action="http://ws/PagoWS/IngresarCarritoResponse" message="tns:IngresarCarritoResponse"/>
+</operation>
+<operation name="listarBanco">
+<input wsam:Action="http://ws/PagoWS/listarBancoRequest" message="tns:listarBanco"/>
+<output wsam:Action="http://ws/PagoWS/listarBancoResponse" message="tns:listarBancoResponse"/>
+</operation>
 </portType>
 <binding name="PagoWSPortBinding" type="tns:PagoWS">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="vuelto">
+<operation name="hello">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -37,7 +47,16 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="hello">
+<operation name="IngresarCarrito">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="listarBanco">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

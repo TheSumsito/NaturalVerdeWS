@@ -7,7 +7,6 @@ package modelo.controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,8 +29,8 @@ import modelo.entidades.Tipo_Cuenta;
  *
  * @author mjara
  */
-@WebServlet(name = "insumoProyecto", urlPatterns = {"/insumoProyecto"})
-public class insumoProyecto extends HttpServlet {
+@WebServlet(name = "pagoInsumo", urlPatterns = {"/pagoInsumo"})
+public class pagoInsumo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,26 +43,19 @@ public class insumoProyecto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        daoControlador dao = new daoControlador();
-        List<Proyecto> Proyecto = null;
-        List<Banco> banco = null;
-        List<Tipo_Cuenta> tipo = null;
-
-        HttpSession sesion = request.getSession();
-        String RutCliente = (String) sesion.getAttribute("rut");
-
-        try {
-            Proyecto = dao.buscarProyecto(RutCliente);
-            banco = dao.listarBanco();
-            tipo = dao.listarTipoCuenta();
-
-        } catch (Exception e) {
-            Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, e);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet pagoInsumo</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet pagoInsumo at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        request.setAttribute("proyecto", Proyecto);
-        request.setAttribute("banco", banco);
-        request.setAttribute("tipo", tipo);
-        request.getRequestDispatcher("insumoPro.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -93,40 +85,37 @@ public class insumoProyecto extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         daoControlador dao = new daoControlador();
-        List<Insumo> Insumo = new ArrayList<Insumo>();
-        List<Proyecto> proyecto = null;
-        List<Insumo> total = null;
-        List<Banco> banco = null;
-        List<Tipo_Cuenta> tipo = null;
+
+        //CREAMOS UN RANDOM PARA ASIGNAR UN COD ALEATORIO A LA SOLICITUD
+        Random generadorAleatorios = new Random();
+        int Codigo = 1 + generadorAleatorios.nextInt(100000);
 
         HttpSession sesion = request.getSession();
         String RutCliente = (String) sesion.getAttribute("rut");
+        boolean resultado = false;
 
-        int valor = 0;
-        String boton = request.getParameter("btnAccion");
-        String Nombre_Proyecto = request.getParameter("cboProyecto");
+        //VARIABLES 
+        int CodCarrito = Codigo;
+        String numCuenta = request.getParameter("txtCuenta");
+        String Nombre_Banco = request.getParameter("cboBanco");
+        String Tipo_Cuenta = request.getParameter("cboTipo");
+        String numCuotas = request.getParameter("txtCuotas");
+        String Total = request.getParameter("txtTotal");
+        String Nombre_Proyecto = request.getParameter("txtNombre");
 
         try {
-            Insumo = dao.buscarInsumo(Nombre_Proyecto);
-            proyecto = dao.buscarProyecto(RutCliente);
-            total = dao.totalPagar(Nombre_Proyecto);
-            Nombre_Proyecto = request.getParameter("cboProyecto");
-            banco = dao.listarBanco();
-            tipo = dao.listarTipoCuenta();
 
         } catch (Exception e) {
             Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
-        request.setAttribute("proyecto", proyecto);
-        request.setAttribute("insumo", Insumo);
-        request.setAttribute("total", total);
-        request.setAttribute("valor", valor);
-        request.setAttribute("nombre_proyecto", Nombre_Proyecto);
-        request.setAttribute("proyecto", proyecto);
-        request.setAttribute("banco", banco);
-        request.setAttribute("tipo", tipo);
-
-        request.getRequestDispatcher("insumoPro.jsp").forward(request, response);
+        request.setAttribute("codcarrito", CodCarrito);
+        request.setAttribute("numcuenta", numCuenta);
+        request.setAttribute("nombrebanco", Nombre_Banco);
+        request.setAttribute("tipocuenta", Tipo_Cuenta);
+        request.setAttribute("numcuotas", numCuotas);
+        request.setAttribute("total", Total);
+        request.setAttribute("nombrepro", Nombre_Proyecto);
+        request.getRequestDispatcher("datos.jsp").forward(request, response);
     }
 
     /**

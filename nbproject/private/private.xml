@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/modelo/controlador/estadoPago.java</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/modelo/controlador/insumoProyecto.java</file>
-            <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/modelo/controlador/estadoHora.java</file>
-            <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/test/testLogin.java</file>
-            <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/ws/NaturalWS.java</file>
-            <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/modelo/dao/daoControlador.java</file>
+            <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/web/registro.jsp</file>
+            <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/web/static/css/style.css</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/web/insumoPro.jsp</file>
-            <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/test/testAgregar.java</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/web/pago/estadoPago.jsp</file>
         </group>
     </open-files>

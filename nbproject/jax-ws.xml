@@ -4,9 +4,6 @@
     <service name="NaturalWS">
       <implementation-class>ws.NaturalWS</implementation-class>
     </service>
-    <service name="PagoWS">
-      <implementation-class>ws.PagoWS</implementation-class>
-    </service>
   </services>
   <clients/>
   <jsr109>true</jsr109>
