@@ -96,15 +96,22 @@ public class pagoInsumo extends HttpServlet {
 
         //VARIABLES 
         int CodCarrito = Codigo;
-        String numCuenta = request.getParameter("txtCuenta");
+        int numCuenta = Integer.parseInt(request.getParameter("txtCuenta"));
         String Nombre_Banco = request.getParameter("cboBanco");
         String Tipo_Cuenta = request.getParameter("cboTipo");
-        String numCuotas = request.getParameter("txtCuotas");
-        String Total = request.getParameter("txtTotal");
+        int numCuotas = Integer.parseInt(request.getParameter("txtCuotas"));
+        int Total = Integer.parseInt(request.getParameter("txtTotal"));
         String Nombre_Proyecto = request.getParameter("txtNombre");
-
+        int valorCuota = (Total / numCuotas);
+        
+        Carrito carro = new Carrito(CodCarrito, Nombre_Proyecto, numCuenta, Nombre_Banco, Tipo_Cuenta, numCuotas, Total, valorCuota);
+        
         try {
-
+            if (dao.IngresarCarrito(carro)) {
+                resultado = true;
+            } else {
+                resultado = false;
+            }
         } catch (Exception e) {
             Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -115,7 +122,9 @@ public class pagoInsumo extends HttpServlet {
         request.setAttribute("numcuotas", numCuotas);
         request.setAttribute("total", Total);
         request.setAttribute("nombrepro", Nombre_Proyecto);
-        request.getRequestDispatcher("datos.jsp").forward(request, response);
+        request.setAttribute("valorCuota", valorCuota);
+        request.setAttribute("resultado", resultado);
+        request.getRequestDispatcher("detallePago.jsp").forward(request, response);
     }
 
     /**

@@ -114,6 +114,14 @@
                             <h2 class="h-bold" style="color: green">Insumos Necesarios</h2>
                             <div class="divider-header"></div>
                         </div>
+                        
+                        <!-- MENSAJES DE ALERTA -->
+                        <c:if test="${resultado==true}">
+                            <div class="alert alert-success">Se ah realizado el Pago Correctamente</div>
+                        </c:if>
+                        <c:if test="${resultado==false}">
+                            <div class="alert alert-warning">No se pudo realizar Pago</div>
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -293,7 +301,7 @@
                                     </div>
                                     <div class="col-md-10">
                                         <h5>Valor Total :</h5>
-                                        <input type="text" class="form-control" style="text-align: center" name="txtTotal" value="$ ${total}" readonly="true">
+                                        <input type="text" class="form-control" style="text-align: center" name="txtTotal" value="${total}" readonly="true">
                                     </div>
                                 </div>
 
