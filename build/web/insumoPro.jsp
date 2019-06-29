@@ -297,8 +297,14 @@
                                                         <div class="nav nav-pills justify-content-center text-center" id="v-pills-tab"
                                                              role="tablist" aria-orientation="vertical">
                                                             <c:if test="${total!=null}">
-                                                                <a class="btn btn-skin" id="v-pills-performance-tab" data-toggle="pill" href="#v-pills-performance"
-                                                                   role="tab" aria-controls="v-pills-performance" aria-selected="false">Ir al Carrito de Compras</a>
+                                                                <c:if test="${validar==0}">
+                                                                    <a class="btn btn-skin" id="v-pills-performance-tab" data-toggle="pill" href="#v-pills-performance"
+                                                                       role="tab" aria-controls="v-pills-performance" aria-selected="false">Ir al Carrito de Compras</a>
+                                                                </c:if>
+                                                                <c:if test="${validar!=0}">
+                                                                    <a class="btn btn-skin" id="v-pills-performance-tab" data-toggle="pill" href="#v-pills-performance"
+                                                                       role="tab" aria-controls="v-pills-performance" aria-selected="false" disabled>Pagado</a>
+                                                                </c:if>
                                                             </c:if>
                                                         </div>
                                                     </div>

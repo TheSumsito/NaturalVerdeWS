@@ -891,6 +891,27 @@ public class daoControlador {
         }
         return cliente;
     }
+    
+    public Carrito validarCompra(String nombre) throws SQLException{
+        Carrito carro = new Carrito(0, "false", 0, "false", "false", 0, 0, 0);
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String validarCompra = "SELECT * FROM CARRITO WHERE NOMBRE_PROYECTO = '"+nombre+"'";
+            CallableStatement cstmt = this.conexion.prepareCall(validarCompra);
+            cstmt.execute();
+            
+            ResultSet rs = cstmt.getResultSet();
+            
+            while (rs.next()) {                
+                carro.setCodCarrito(rs.getInt("CodCarrito"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return carro;
+    }
 
     public List<Proyecto> detalleProyecto(String nombre) throws SQLException {
         List<Proyecto> proyecto = new ArrayList<Proyecto>();

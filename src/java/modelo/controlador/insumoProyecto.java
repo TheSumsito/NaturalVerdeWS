@@ -98,6 +98,7 @@ public class insumoProyecto extends HttpServlet {
         List<Insumo> total = null;
         List<Banco> banco = null;
         List<Tipo_Cuenta> tipo = null;
+        Carrito carro = null;
 
         HttpSession sesion = request.getSession();
         String RutCliente = (String) sesion.getAttribute("rut");
@@ -105,6 +106,8 @@ public class insumoProyecto extends HttpServlet {
         int valor = 0;
         String boton = request.getParameter("btnAccion");
         String Nombre_Proyecto = request.getParameter("cboProyecto");
+        int pago = 0;
+        int validar = 0;
 
         try {
             Insumo = dao.buscarInsumo(Nombre_Proyecto);
@@ -113,10 +116,13 @@ public class insumoProyecto extends HttpServlet {
             Nombre_Proyecto = request.getParameter("cboProyecto");
             banco = dao.listarBanco();
             tipo = dao.listarTipoCuenta();
+            carro = dao.validarCompra(Nombre_Proyecto);
+            validar = carro.getCodCarrito();
 
         } catch (Exception e) {
             Logger.getLogger(insumoProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
+        request.setAttribute("validar", validar);
         request.setAttribute("proyecto", proyecto);
         request.setAttribute("insumo", Insumo);
         request.setAttribute("total", total);
