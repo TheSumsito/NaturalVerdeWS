@@ -1049,30 +1049,6 @@ public class daoControlador {
         return historial;
     }
 
-    //FILTRO BUSQUEDA PROYECTO POR EQUIPO DE TRABAJO
-    public Proyecto busquedaProyectoEquipo(String rut, String nombre) throws SQLException {
-        Proyecto proyecto = new Proyecto("false", "false", "false", "false", "false");
-        try {
-            this.conexion = new Conexion().obtenerConexion();
-            String buscarProyecto = "SELECT * FROM PROYECTO WHERE RUTCLIENTE ='" + rut + "' AND NOMBRE_EQUIPO='" + nombre + "'";
-            CallableStatement cstmt = this.conexion.prepareCall(buscarProyecto);
-            cstmt.execute();
-
-            ResultSet rs = cstmt.getResultSet();
-
-            while (rs.next()) {
-                proyecto.setNombre_Proyecto(rs.getString("Nombre_Proyecto"));
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            this.conexion.close();
-        }
-        return proyecto;
-    }
-
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //MODIFICAR
     //CAMBIAR EL ESTADO DE UN PROYECTO GENERADO POR EL CLIENTE
