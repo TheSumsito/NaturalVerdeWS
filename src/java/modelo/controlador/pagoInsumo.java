@@ -98,7 +98,7 @@ public class pagoInsumo extends HttpServlet {
 
         //VARIABLES 
         int CodCarrito = Codigo;
-        int numCuenta = Integer.parseInt(request.getParameter("txtCuenta"));
+        String numCuenta = request.getParameter("txtCuenta");
         String Nombre_Banco = request.getParameter("cboBanco");
         String Tipo_Cuenta = request.getParameter("cboTipo");
         int numCuotas = Integer.parseInt(request.getParameter("txtCuotas"));
@@ -113,7 +113,7 @@ public class pagoInsumo extends HttpServlet {
         Cliente cliente = null;
         String Correo = null;
         String Asunto = "";
-        String mensaje = "Su Pago ahh sido realizado Correctamente \n"
+        String mensaje = "Su Pago ah sido realizado Correctamente \n"
                 + "Detalles de su Pago: \n"
                 + "Codigo Carrito: " + CodCarrito +"\n"
                 + "Numero de Cuenta: " + numCuenta + "\n"

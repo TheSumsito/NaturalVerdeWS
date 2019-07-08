@@ -145,9 +145,7 @@
 
                                     <!-- NOMBRE DEL PROYECTO -->
                                     <center>
-                                        <div class="service-desc">
-                                            <h5>Nombre del Proyecto:</h5>
-                                            <br>
+                                        <div class="service-desc">  
                                             <select class="form-control" style=" width:50%" name="cboProyecto">
                                                 <option value="">Seleccionar</option>
                                                 <c:forEach var="pro" items="${proyecto}">
@@ -162,16 +160,32 @@
 
 
                                     <div class="box-register form-row col-md-4">
+                                        <!-- NOMBRE DEL PROYECTO -->
+                                        <div class="service-desc form-group col-md">
+                                            <h5>Nombre del Proyecto</h5>
+                                            <c:if test="${name!=null}">
+                                                <input class="form-control" style="text-align: center; color: green" type="text" name="txtProyecto" id="txtProyecto" readonly="readonly" value="${name}">
+                                                <br>
+                                            </c:if>
+                                            <c:if test="${name==null}">
+                                                <input class="form-control" style="text-align: center; color: green" type="text" name="txtProyecto" id="txtProyecto" readonly="readonly" value="${Nombre}">
+                                                <br>
+                                            </c:if>
+
+                                        </div>
                                         <!-- NOMBRE EQUIPO -->
                                         <div class="service-desc form-group col-md">
                                             <h5>Equipo a Terreno</h5>
+                                            <c:forEach var="tra" items="${trabajador}">
+                                                <c:set var="NombreEqui" value="${tra.getNombre_Equipo()}"></c:set>
+                                            </c:forEach>
                                             <c:if test="${equipo!=null}">
-                                                <input class="form-control" style="text-align: center" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly" value="${equipo}">
+                                                <input class="form-control" style="text-align: center; color: green" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly" value="${equipo}">
                                                 <br>
                                                 <input class="btn btn-skin" type="submit" name="btnAccion" id="btnMostrar" value="Mostrar">
                                             </c:if>
                                             <c:if test="${equipo==null}">
-                                                <input class="form-control" style="text-align: center" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly">
+                                                <input class="form-control" style="text-align: center; color: green" type="text" name="txtEquipo" id="txtEquipo" readonly="readonly" value="${NombreEqui}">
                                                 <br>
                                                 <input class="btn btn-skin" type="submit" name="btnAccion" id="btnMostrar" value="Mostrar" disabled>
                                             </c:if>

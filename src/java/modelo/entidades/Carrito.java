@@ -12,7 +12,7 @@ package modelo.entidades;
 public class Carrito {
     private int CodCarrito;
     private String Nombre_Proyecto;
-    private int NumCuenta;
+    private String NumCuenta;
     private String Nombre_Banco;
     private String Tipo_Cuenta;
     private int NumCuota;
@@ -22,7 +22,7 @@ public class Carrito {
     public Carrito() {
     }
 
-    public Carrito(int CodCarrito, String Nombre_Proyecto, int NumCuenta, String Nombre_Banco, String Tipo_Cuenta, int NumCuota, int TotalPagar, int ValorCuota) {
+    public Carrito(int CodCarrito, String Nombre_Proyecto, String NumCuenta, String Nombre_Banco, String Tipo_Cuenta, int NumCuota, int TotalPagar, int ValorCuota) {
         this.CodCarrito = CodCarrito;
         this.Nombre_Proyecto = Nombre_Proyecto;
         this.NumCuenta = NumCuenta;
@@ -51,11 +51,11 @@ public class Carrito {
         this.Nombre_Proyecto = Nombre_Proyecto;
     }
 
-    public int getNumCuenta() {
+    public String getNumCuenta() {
         return NumCuenta;
     }
 
-    public void setNumCuenta(int NumCuenta) {
+    public void setNumCuenta(String NumCuenta) {
         this.NumCuenta = NumCuenta;
     }
 

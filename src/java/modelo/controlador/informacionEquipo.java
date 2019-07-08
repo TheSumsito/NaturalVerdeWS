@@ -111,18 +111,25 @@ public class informacionEquipo extends HttpServlet {
         List<Proyecto> listadoProyecto = null;
         //CREAMOS UNA LISTA QUE LE PASAREMOS TODOS LOS TRABAJADORES
         List<Trabajador> trabajador = null;
+
+        //PARA MANTENER EL NOMBRE DEL PROYECTO
+        String nombreProyecto = request.getParameter("txtProyecto");
+        Proyecto detalle = null;
+        String name = null;
+
         //LLAMAMOS A LA ENTIDAD PROYECTO
         Proyecto proyecto = null;
 
         //OBTENEMOS LA SESION
         HttpSession sesion = request.getSession();
-        
+
         //VARIABLES
         String RutCliente = (String) sesion.getAttribute("rut");
         String Nombre_Equipo = request.getParameter("txtEquipo");
         String Nombre_Proyecto = request.getParameter("cboProyecto");
         String boton = request.getParameter("btnAccion");
         String equipo = null;
+        String Nombre = Nombre_Proyecto;
 
         try {
             if (boton.equals("Seleccionar")) {
@@ -132,12 +139,17 @@ public class informacionEquipo extends HttpServlet {
             } else if (boton.equals("Mostrar")) {
                 trabajador = dao.buscarTrabajador(Nombre_Equipo);
                 listadoProyecto = dao.buscarProyecto(RutCliente);
+                detalle = dao.estadoProyecto(nombreProyecto);
+                name = detalle.getNombre_Proyecto();
             }
+
         } catch (Exception e) {
             Logger.getLogger(informacionEquipo.class.getName()).log(Level.SEVERE, null, e);
         }
-        
+
         //RETORNAMOS
+        request.setAttribute("name", name);
+        request.setAttribute("Nombre", Nombre);
         request.setAttribute("proyecto", listadoProyecto);
         request.setAttribute("equipo", equipo);
         request.setAttribute("trabajador", trabajador);

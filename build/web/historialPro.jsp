@@ -133,7 +133,13 @@
                                     <!-- NOMBRE DEL PROYECTO -->
                                     <center>
                                         <div class="service-desc">
-                                            <h5>Nombre del Proyecto:</h5>
+                                            <c:if test="${Nombre!=null}">
+                                                <h5>Nombre del Proyecto: <span style="color: green">${Nombre}</span></h5>
+                                            </c:if>
+                                            <c:if test="${Nombre==null}">
+                                                <h5>Nombre del Proyecto: </h5>
+                                            </c:if>
+
                                             <br>
                                             <select class="form-control" style=" width:50%" name="cboProyecto">
                                                 <option value="">Seleccionar</option>

@@ -100,10 +100,12 @@ public class historialProyecto extends HttpServlet {
         //VARIABLES
         String Nombre_Proyecto = request.getParameter("cboProyecto");
         String RutCliente = (String) sesion.getAttribute("rut");
+        String Nombre = null;
 
         try {
             Historial = dao.buscarHistorial(Nombre_Proyecto);
             proyecto = dao.buscarProyecto(RutCliente);
+            Nombre = Nombre_Proyecto;
         } catch (Exception e) {
             Logger.getLogger(historialProyecto.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -111,6 +113,7 @@ public class historialProyecto extends HttpServlet {
         //RETORNAMOS
         request.setAttribute("historial", Historial);
         request.setAttribute("proyecto", proyecto);
+        request.setAttribute("Nombre", Nombre);
         request.getRequestDispatcher("historialPro.jsp").forward(request, response);
 
     }

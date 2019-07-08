@@ -6,6 +6,7 @@
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/modelo/controlador/insumoProyecto.java</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/ws/NaturalWS.java</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/modelo/controlador/informacionEquipo.java</file>
+            <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/modelo/controlador/registroUsuario.java</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/modelo/dao/daoControlador.java</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/test/testAgregar.java</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/web/login.jsp</file>
@@ -15,6 +16,7 @@
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/web/informacionEqui.jsp</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/web/estadoHora.jsp</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/web/registro.jsp</file>
+            <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/src/java/modelo/controlador/pagoInsumo.java</file>
             <file>file:/C:/Users/mjara/Documents/NetBeansProjects/NaturalVerdeWS/web/insumoPro.jsp</file>
         </group>
     </open-files>

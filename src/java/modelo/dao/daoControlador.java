@@ -111,7 +111,7 @@ public class daoControlador {
             CallableStatement cstmt = this.conexion.prepareCall(IngresarCarrito);
             cstmt.setInt(1, carrito.getCodCarrito());
             cstmt.setString(2, carrito.getNombre_Proyecto());
-            cstmt.setInt(3, carrito.getNumCuenta());
+            cstmt.setString(3, carrito.getNumCuenta());
             cstmt.setString(4, carrito.getNombre_Banco());
             cstmt.setString(5, carrito.getTipo_Cuenta());
             cstmt.setInt(6, carrito.getNumCuota());
@@ -509,7 +509,7 @@ public class daoControlador {
             String lista = "{CALL SP_LISTAR_BANCO (?) }";
             CallableStatement cstmt = this.conexion.prepareCall(lista);
             cstmt.registerOutParameter(1, OracleTypes.CURSOR);
-            cstmt.execute();    
+            cstmt.execute();
 
             ResultSet rs = (ResultSet) cstmt.getObject(1);
 
@@ -526,9 +526,9 @@ public class daoControlador {
         }
         return listadoBanco;
     }
-    
+
     //LISTADO TIPO CUENTA
-    public List<Tipo_Cuenta> listarTipoCuenta() throws SQLException{
+    public List<Tipo_Cuenta> listarTipoCuenta() throws SQLException {
         List<Tipo_Cuenta> listadoTipo = new ArrayList<Tipo_Cuenta>();
         try {
             this.conexion = new Conexion().obtenerConexion();
@@ -536,13 +536,13 @@ public class daoControlador {
             CallableStatement cstmt = this.conexion.prepareCall(lista);
             cstmt.registerOutParameter(1, OracleTypes.CURSOR);
             cstmt.execute();
-            
+
             ResultSet rs = (ResultSet) cstmt.getObject(1);
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 Tipo_Cuenta tipo = new Tipo_Cuenta();
                 tipo.setTipo_Banco(rs.getString("Tipo_Cuenta"));
-                
+
                 listadoTipo.add(tipo);
             }
         } catch (Exception e) {
@@ -891,18 +891,18 @@ public class daoControlador {
         }
         return cliente;
     }
-    
-    public Carrito validarCompra(String nombre) throws SQLException{
-        Carrito carro = new Carrito(0, "false", 0, "false", "false", 0, 0, 0);
+
+    public Carrito validarCompra(String nombre) throws SQLException {
+        Carrito carro = new Carrito(0, "false", "false", "false", "false", 0, 0, 0);
         try {
             this.conexion = new Conexion().obtenerConexion();
-            String validarCompra = "SELECT * FROM CARRITO WHERE NOMBRE_PROYECTO = '"+nombre+"'";
+            String validarCompra = "SELECT * FROM CARRITO WHERE NOMBRE_PROYECTO = '" + nombre + "'";
             CallableStatement cstmt = this.conexion.prepareCall(validarCompra);
             cstmt.execute();
-            
+
             ResultSet rs = cstmt.getResultSet();
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 carro.setCodCarrito(rs.getInt("CodCarrito"));
             }
         } catch (Exception e) {
@@ -1048,6 +1048,30 @@ public class daoControlador {
         }
         return historial;
     }
+
+    //FILTRO BUSQUEDA PROYECTO POR EQUIPO DE TRABAJO
+    public Proyecto busquedaProyectoEquipo(String rut, String nombre) throws SQLException {
+        Proyecto proyecto = new Proyecto("false", "false", "false", "false", "false");
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String buscarProyecto = "SELECT * FROM PROYECTO WHERE RUTCLIENTE ='" + rut + "' AND NOMBRE_EQUIPO='" + nombre + "'";
+            CallableStatement cstmt = this.conexion.prepareCall(buscarProyecto);
+            cstmt.execute();
+
+            ResultSet rs = cstmt.getResultSet();
+
+            while (rs.next()) {
+                proyecto.setNombre_Proyecto(rs.getString("Nombre_Proyecto"));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return proyecto;
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //MODIFICAR
