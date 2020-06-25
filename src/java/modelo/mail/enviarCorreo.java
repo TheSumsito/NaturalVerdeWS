@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 public class enviarCorreo {
     
     public static String Username = "rebootsoftware2019@gmail.com";
-    public static String PassWord = "";
+    public static String PassWord = "Escribe_tu_Contrasena";
     String Mensage = "";
     String To = "";
     String Subject = "";
